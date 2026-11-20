@@ -5,14 +5,14 @@ import java.util.Scanner;
 
 public class Entrada {
 
-    public static int ler(Scanner leitor, int quantEntradas) {
+    public static int lerOpcao(Scanner leitor, int quantOpcoes) {
         for (;;) {
             try {
                 System.out.println();
                 System.out.print("Escolha: ");
                 int escolha = leitor.nextInt();
 
-                if (escolha < 0 || escolha > quantEntradas) {
+                if (escolha < 0 || escolha > quantOpcoes) {
                     throw new ArrayIndexOutOfBoundsException();
                 }
 

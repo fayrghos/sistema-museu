@@ -1,4 +1,4 @@
-package menu.opcoes;
+package sistema.menu;
 
 public abstract class Opcao {
 

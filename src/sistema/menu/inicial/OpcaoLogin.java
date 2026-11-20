@@ -1,4 +1,6 @@
-package menu.opcoes;
+package sistema.menu.inicial;
+
+import sistema.menu.Opcao;
 
 public final class OpcaoLogin extends Opcao {
 

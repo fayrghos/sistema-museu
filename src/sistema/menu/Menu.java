@@ -1,19 +1,18 @@
-package menu.submenus;
+package sistema.menu;
 
-import java.util.Scanner;
-import menu.opcoes.Opcao;
-import menu.opcoes.OpcaoSaida;
+import sistema.Sistema;
+import sistema.menu.inicial.OpcaoSaida;
 import utilidades.Entrada;
 
-public class Submenu {
+public class Menu {
 
-    public Scanner leitor;
+    private final Sistema sistema;
 
     public Opcao[] opcoes;
     public Opcao saida;
 
-    public Submenu(Scanner leitor, Opcao[] opcoes, Runnable executorSaida) {
-        this.leitor = leitor;
+    public Menu(Sistema sistema, Opcao[] opcoes, Runnable executorSaida) {
+        this.sistema = sistema;
         this.opcoes = opcoes;
         this.saida = new OpcaoSaida(executorSaida);
     }
@@ -26,7 +25,7 @@ public class Submenu {
     }
 
     public void processar() {
-        int escolha = Entrada.ler(leitor, opcoes.length);
+        int escolha = Entrada.lerOpcao(sistema.leitor(), opcoes.length);
 
         if (escolha != 0) {
             opcoes[escolha - 1].interagir();
