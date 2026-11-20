@@ -6,15 +6,17 @@ import utilidades.Entrada;
 
 public class Menu {
 
-    private final Sistema sistema;
+    protected final Sistema sistema;
+    protected Menu pai;
 
     public Opcao[] opcoes;
     public Opcao saida;
 
-    public Menu(Sistema sistema, Opcao[] opcoes, Runnable executorSaida) {
+    public Menu(Sistema sistema, Opcao[] opcoes, Menu pai) {
+        this.pai = pai;
         this.sistema = sistema;
         this.opcoes = opcoes;
-        this.saida = new OpcaoSaida(executorSaida);
+        this.saida = new OpcaoSaida(sistema, pai);
     }
 
     public void imprimir() {

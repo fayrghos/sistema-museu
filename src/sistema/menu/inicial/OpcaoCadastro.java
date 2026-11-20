@@ -1,11 +1,12 @@
 package sistema.menu.inicial;
 
+import sistema.Sistema;
 import sistema.menu.Opcao;
 
 public final class OpcaoCadastro extends Opcao {
 
-    public OpcaoCadastro() {
-        super("Cadastro");
+    public OpcaoCadastro(Sistema sistema) {
+        super(sistema, "Cadastro");
     }
 
     @Override

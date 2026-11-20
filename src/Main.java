@@ -13,8 +13,8 @@ public class Main {
 
         Menu menuAutenticar = new Menu(
             sistema,
-            new Opcao[] { new OpcaoLogin(), new OpcaoCadastro() },
-            () -> sistema.desligar()
+            new Opcao[] { new OpcaoLogin(sistema), new OpcaoCadastro(sistema) },
+            null
         );
 
         sistema.definirMenu(menuAutenticar);

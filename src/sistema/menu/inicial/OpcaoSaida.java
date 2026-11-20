@@ -1,18 +1,24 @@
 package sistema.menu.inicial;
 
+import sistema.Sistema;
+import sistema.menu.Menu;
 import sistema.menu.Opcao;
 
 public final class OpcaoSaida extends Opcao {
 
-    private Runnable executor;
+    private final Menu menuPai;
 
-    public OpcaoSaida(Runnable executor) {
-        super("Sair");
-        this.executor = executor;
+    public OpcaoSaida(Sistema sistema, Menu menuPai) {
+        super(sistema, "Sair");
+        this.menuPai = menuPai;
     }
 
     @Override
     public void interagir() {
-        executor.run();
+        if (menuPai != null) {
+            sistema.definirMenu(menuPai);
+            return;
+        }
+        sistema.desligar();
     }
 }
