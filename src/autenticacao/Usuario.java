@@ -1,5 +1,4 @@
 package autenticacao;
-// teste
 
 import java.util.ArrayList;
 
@@ -39,10 +38,51 @@ public class Usuario {
         boolean administrador,
         boolean curador
     ){
-
+        
         return new Usuario(id, nome,email,senha,ativo,administrador,curador);
     }
     
+    public int getId(){
+        return id;
+    }
+    public String getNome(){
+        return nome;
+    }
+    public String getEmail(){
+        return email;
+    }
+    public String getSenha(){
+        return senha;
+    }
+    public boolean getAtivo(){
+        return ativo;
+    }
+    public boolean getAdministrador(){
+        return administrador;
+    }
+    public boolean getCurador(){
+        return curador;
+    }
+
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+    public void setEmail(String email){
+        this.email = email;
+    }
+    public void setSenha(String senha){
+        this.senha = senha;
+    }
+    public void setAtivo(boolean ativo){
+        this.ativo = ativo;
+    }
+    public void setAdministrador(boolean administrador){
+        this.administrador = administrador;
+    }
+    public void setCurador(boolean curador){
+        this.curador = curador;
+    }
+
     public void verUsuario() {
         System.out.println("-------------Dados Usuário-------------");
         System.out.println("Nome: "+ nome + "\nE-mail: "+email);
@@ -66,15 +106,15 @@ public class Usuario {
 
         if (emailValido) {
             // Consulta no banco: se o e-mail já existir em outro usuário, avisa e dá return;
-            this.email = email;
+            setEmail(email);
         }
 
         if (nomeValido) {
-            this.nome = nome;
+            setNome(nome);
         }
 
         if (senhaValida) {
-            this.senha = senha;
+            setSenha(senha);
         }
 
         System.out.println("Perfil do Usuário atualizado!");
@@ -89,8 +129,8 @@ public class Usuario {
         
 
         // TODO: Bloquear ação de ZERAR OS ADMINISTRADORES DO SISTEMA USO DO BANCO DE DADOS
-        this.administrador = administrador;
-        this.curador = curador;
+        setAdministrador(administrador);
+        setCurador(curador);
         System.out.println("As permissões do Usuário foram atualizadas!");
     }
 
