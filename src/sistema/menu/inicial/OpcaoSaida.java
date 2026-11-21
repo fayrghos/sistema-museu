@@ -16,7 +16,7 @@ public final class OpcaoSaida extends Opcao {
     @Override
     public void interagir() {
         if (menuPai != null) {
-            sistema.definirMenu(menuPai);
+            sistema.alterarMenu(menuPai);
             return;
         }
         sistema.desligar();

@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import sistema.Sistema;
+import sistema.menu.IdMenu;
 import sistema.menu.Menu;
 import sistema.menu.Opcao;
 import sistema.menu.inicial.OpcaoCadastro;
@@ -11,15 +12,21 @@ public class Main {
         Scanner leitor = new Scanner(System.in);
         Sistema sistema = new Sistema(leitor);
 
-        Menu menuAutenticar = new Menu(
-            sistema,
-            new Opcao[] { new OpcaoLogin(sistema), new OpcaoCadastro(sistema) },
-            null
+        sistema.registrarMenu(
+            IdMenu.INICIAL,
+            new Menu(
+                sistema,
+                new Opcao[] {
+                    new OpcaoLogin(sistema),
+                    new OpcaoCadastro(sistema),
+                },
+                null
+            )
         );
 
-        sistema.definirMenu(menuAutenticar);
-
+        sistema.alterarMenu(IdMenu.INICIAL);
         System.out.println("Bem-vindo(a) ao gerenciador do museu!");
+
         while (sistema.rodando()) {
             sistema.menuAtivo().imprimir();
             sistema.menuAtivo().processar();
