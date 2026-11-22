@@ -1,8 +1,6 @@
-package sistema.menu.inicial;
+package sistema.menu;
 
 import sistema.Sistema;
-import sistema.menu.Menu;
-import sistema.menu.Opcao;
 
 public final class OpcaoSaida extends Opcao {
 
