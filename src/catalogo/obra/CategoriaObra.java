@@ -1,6 +1,10 @@
 package catalogo.obra;
 
-/**
- * Representa categorias utilizadas nas obras.
- */
-public enum CategoriaObra {}
+public enum CategoriaObra {
+    PINTURA,
+    ESCULTURA,
+    FOTOGRAFIA,
+    INSTALACAO,
+    DOCUMENTO,
+    OUTRA
+}
