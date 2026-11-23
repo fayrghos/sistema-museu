@@ -3,21 +3,21 @@ import sistema.Sistema;
 import sistema.menu.IdMenu;
 import sistema.menu.Menu;
 import sistema.menu.Opcao;
-import sistema.menu.criacao.OpcaoExposicaoCri;
-import sistema.menu.criacao.OpcaoNucleoCri;
-import sistema.menu.criacao.OpcaoObraCri;
-import sistema.menu.gerenciamento.OpcaoExposicaoGer;
-import sistema.menu.gerenciamento.OpcaoNucleoGer;
-import sistema.menu.gerenciamento.OpcaoObraGer;
+import sistema.menu.criacao.OpcaoCriarExposicao;
+import sistema.menu.criacao.OpcaoCriarNucleo;
+import sistema.menu.criacao.OpcaoCriarObra;
+import sistema.menu.gerenciamento.OpcaoGerenciarExposicao;
+import sistema.menu.gerenciamento.OpcaoGerenciarNucleo;
+import sistema.menu.gerenciamento.OpcaoGerenciarObra;
 import sistema.menu.inicial.OpcaoCadastro;
 import sistema.menu.inicial.OpcaoLogin;
-import sistema.menu.principal.OpcaoAtivar;
-import sistema.menu.principal.OpcaoAtualizarUsu;
-import sistema.menu.principal.OpcaoConsultarIte;
-import sistema.menu.principal.OpcaoConsultarUsu;
-import sistema.menu.principal.OpcaoCriar;
-import sistema.menu.principal.OpcaoDesativar;
-import sistema.menu.principal.OpcaoExcluir;
+import sistema.menu.principal.OpcaoAtivarUsuario;
+import sistema.menu.principal.OpcaoAtualizarUsuario;
+import sistema.menu.principal.OpcaoConsultarItem;
+import sistema.menu.principal.OpcaoConsultarUsuario;
+import sistema.menu.principal.OpcaoCriarItem;
+import sistema.menu.principal.OpcaoDesativarUsuario;
+import sistema.menu.principal.OpcaoExcluirItem;
 
 public class Main {
 
@@ -42,15 +42,15 @@ public class Main {
             new Menu(
                 sistema,
                 new Opcao[] {
-                    new OpcaoAtivar(sistema),
-                    new OpcaoDesativar(sistema),
-                    new OpcaoConsultarUsu(sistema),
-                    new OpcaoAtualizarUsu(sistema),
-                    new OpcaoCriar(sistema),
-                    new OpcaoConsultarIte(sistema),
-                    new OpcaoExcluir(sistema),
+                    new OpcaoConsultarUsuario(sistema),
+                    new OpcaoAtualizarUsuario(sistema),
+                    new OpcaoDesativarUsuario(sistema),
+                    new OpcaoAtivarUsuario(sistema),
+                    new OpcaoConsultarItem(sistema),
+                    new OpcaoCriarItem(sistema),
+                    new OpcaoExcluirItem(sistema),
                 },
-                IdMenu.INICIAL
+                null
             )
         );
 
@@ -59,11 +59,11 @@ public class Main {
             new Menu(
                 sistema,
                 new Opcao[] {
-                    new OpcaoExposicaoCri(sistema),
-                    new OpcaoNucleoCri(sistema),
-                    new OpcaoObraCri(sistema),
+                    new OpcaoCriarExposicao(sistema),
+                    new OpcaoCriarNucleo(sistema),
+                    new OpcaoCriarObra(sistema),
                 },
-                IdMenu.INICIAL
+                IdMenu.PRINCIPAL
             )
         );
 
@@ -72,11 +72,11 @@ public class Main {
             new Menu(
                 sistema,
                 new Opcao[] {
-                    new OpcaoExposicaoGer(sistema),
-                    new OpcaoNucleoGer(sistema),
-                    new OpcaoObraGer(sistema),
+                    new OpcaoGerenciarExposicao(sistema),
+                    new OpcaoGerenciarNucleo(sistema),
+                    new OpcaoGerenciarObra(sistema),
                 },
-                IdMenu.INICIAL
+                IdMenu.PRINCIPAL
             )
         );
 

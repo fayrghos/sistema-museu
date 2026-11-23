@@ -3,14 +3,14 @@ package sistema.menu.principal;
 import sistema.Sistema;
 import sistema.menu.Opcao;
 
-public final class OpcaoConsultarUsu extends Opcao {
+public final class OpcaoConsultarUsuario extends Opcao {
 
-    public OpcaoConsultarUsu(Sistema sistema) {
+    public OpcaoConsultarUsuario(Sistema sistema) {
         super(sistema, "Consultar Usuário", true, false);
     }
 
     @Override
     public void interagir() {
-        System.out.println("Não implementado.");
+        System.out.println("Consultando usuário...");
     }
 }

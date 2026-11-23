@@ -3,14 +3,14 @@ package sistema.menu.gerenciamento;
 import sistema.Sistema;
 import sistema.menu.Opcao;
 
-public final class OpcaoNucleoGer extends Opcao {
+public final class OpcaoGerenciarNucleo extends Opcao {
 
-    public OpcaoNucleoGer(Sistema sistema) {
+    public OpcaoGerenciarNucleo(Sistema sistema) {
         super(sistema, "Núcleo", false, true);
     }
 
     @Override
     public void interagir() {
-        System.out.println("Não implementada.");
+        System.out.println("Gerenciando núcleo...");
     }
 }
