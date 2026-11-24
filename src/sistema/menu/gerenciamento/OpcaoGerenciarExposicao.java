@@ -12,5 +12,6 @@ public final class OpcaoGerenciarExposicao extends Opcao {
     @Override
     public void interagir() {
         System.out.println("Gerenciando exposição...");
+        sistema.aguardarConfirmacao();
     }
 }

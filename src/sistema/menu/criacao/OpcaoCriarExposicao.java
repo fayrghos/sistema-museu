@@ -12,5 +12,6 @@ public final class OpcaoCriarExposicao extends Opcao {
     @Override
     public void interagir() {
         System.out.println("Criando exposição...");
+        sistema.aguardarConfirmacao();
     }
 }

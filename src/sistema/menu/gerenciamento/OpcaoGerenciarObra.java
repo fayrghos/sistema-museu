@@ -12,5 +12,6 @@ public final class OpcaoGerenciarObra extends Opcao {
     @Override
     public void interagir() {
         System.out.println("Gerenciando obra...");
+        sistema.aguardarConfirmacao();
     }
 }

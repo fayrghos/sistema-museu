@@ -12,5 +12,6 @@ public final class OpcaoAtualizarUsuario extends Opcao {
     @Override
     public void interagir() {
         System.out.println("Atualizando usuário...");
+        sistema.aguardarConfirmacao();
     }
 }

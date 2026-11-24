@@ -12,5 +12,6 @@ public final class OpcaoCriarNucleo extends Opcao {
     @Override
     public void interagir() {
         System.out.println("Criando núcleo...");
+        sistema.aguardarConfirmacao();
     }
 }

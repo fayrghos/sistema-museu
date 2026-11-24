@@ -12,5 +12,6 @@ public final class OpcaoDesativarUsuario extends Opcao {
     @Override
     public void interagir() {
         System.out.println("Desativando usuário...");
+        sistema.aguardarConfirmacao();
     }
 }

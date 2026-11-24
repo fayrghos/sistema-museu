@@ -12,5 +12,6 @@ public final class OpcaoConsultarUsuario extends Opcao {
     @Override
     public void interagir() {
         System.out.println("Consultando usuário...");
+        sistema.aguardarConfirmacao();
     }
 }

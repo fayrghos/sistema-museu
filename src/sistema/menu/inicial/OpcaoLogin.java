@@ -14,5 +14,6 @@ public final class OpcaoLogin extends Opcao {
     public void interagir() {
         System.out.println("Logado com sucesso!");
         sistema.alterarMenu(IdMenu.PRINCIPAL);
+        sistema.aguardarConfirmacao();
     }
 }

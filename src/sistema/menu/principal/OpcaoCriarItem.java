@@ -12,5 +12,6 @@ public final class OpcaoCriarItem extends Opcao {
     @Override
     public void interagir() {
         System.out.println("Criando item...");
+        sistema.aguardarConfirmacao();
     }
 }

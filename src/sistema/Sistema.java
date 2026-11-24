@@ -47,4 +47,10 @@ public final class Sistema {
     public boolean rodando() {
         return menuAtivo != null;
     }
+
+    public void aguardarConfirmacao() {
+        leitor.nextLine();
+        System.out.println("Pressione ENTER para continuar...");
+        leitor.nextLine();
+    }
 }

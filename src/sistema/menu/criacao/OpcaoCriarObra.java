@@ -12,5 +12,6 @@ public final class OpcaoCriarObra extends Opcao {
     @Override
     public void interagir() {
         System.out.println("Criando obra...");
+        sistema.aguardarConfirmacao();
     }
 }

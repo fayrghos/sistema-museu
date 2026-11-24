@@ -12,5 +12,6 @@ public final class OpcaoGerenciarNucleo extends Opcao {
     @Override
     public void interagir() {
         System.out.println("Gerenciando núcleo...");
+        sistema.aguardarConfirmacao();
     }
 }

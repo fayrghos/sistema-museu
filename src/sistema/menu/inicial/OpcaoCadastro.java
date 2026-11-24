@@ -14,5 +14,6 @@ public final class OpcaoCadastro extends Opcao {
     public void interagir() {
         System.out.println("Registrado com sucesso!");
         sistema.alterarMenu(IdMenu.PRINCIPAL);
+        sistema.aguardarConfirmacao();
     }
 }

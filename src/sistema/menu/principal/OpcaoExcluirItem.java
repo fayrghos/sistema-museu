@@ -12,5 +12,6 @@ public final class OpcaoExcluirItem extends Opcao {
     @Override
     public void interagir() {
         System.out.println("Excluindo item...");
+        sistema.aguardarConfirmacao();
     }
 }
