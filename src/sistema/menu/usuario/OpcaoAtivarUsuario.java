@@ -1,4 +1,4 @@
-package sistema.menu.principal;
+package sistema.menu.usuario;
 
 import sistema.Sistema;
 import sistema.menu.Opcao;

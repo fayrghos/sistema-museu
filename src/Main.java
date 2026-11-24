@@ -3,21 +3,16 @@ import sistema.Sistema;
 import sistema.menu.IdMenu;
 import sistema.menu.Menu;
 import sistema.menu.Opcao;
-import sistema.menu.autenticacao.OpcaoCadastro;
 import sistema.menu.autenticacao.OpcaoLogin;
-import sistema.menu.criacao.OpcaoCriarExposicao;
-import sistema.menu.criacao.OpcaoCriarNucleo;
-import sistema.menu.criacao.OpcaoCriarObra;
-import sistema.menu.gerenciamento.OpcaoGerenciarExposicao;
-import sistema.menu.gerenciamento.OpcaoGerenciarNucleo;
-import sistema.menu.gerenciamento.OpcaoGerenciarObra;
-import sistema.menu.principal.OpcaoAtivarUsuario;
-import sistema.menu.principal.OpcaoAtualizarUsuario;
-import sistema.menu.principal.OpcaoConsultarItem;
-import sistema.menu.principal.OpcaoConsultarUsuario;
-import sistema.menu.principal.OpcaoCriarItem;
-import sistema.menu.principal.OpcaoDesativarUsuario;
-import sistema.menu.principal.OpcaoExcluirItem;
+import sistema.menu.item.OpcaoConsultarItem;
+import sistema.menu.item.OpcaoCriarItem;
+import sistema.menu.item.OpcaoExcluirItem;
+import sistema.menu.principal.OpcaoGerenciarItens;
+import sistema.menu.principal.OpcaoGerenciarUsuarios;
+import sistema.menu.usuario.OpcaoAtivarUsuario;
+import sistema.menu.usuario.OpcaoAtualizarUsuario;
+import sistema.menu.usuario.OpcaoConsultarUsuario;
+import sistema.menu.usuario.OpcaoDesativarUsuario;
 
 public class Main {
 
@@ -30,10 +25,7 @@ public class Main {
             new Menu(
                 sistema,
                 "Autenticação",
-                new Opcao[] {
-                    new OpcaoLogin(sistema),
-                    new OpcaoCadastro(sistema),
-                },
+                new Opcao[] { new OpcaoLogin(sistema) },
                 null
             )
         );
@@ -44,41 +36,38 @@ public class Main {
                 sistema,
                 "Menu Principal",
                 new Opcao[] {
-                    new OpcaoConsultarUsuario(sistema),
-                    new OpcaoAtualizarUsuario(sistema),
-                    new OpcaoDesativarUsuario(sistema),
-                    new OpcaoAtivarUsuario(sistema),
-                    new OpcaoConsultarItem(sistema),
-                    new OpcaoCriarItem(sistema),
-                    new OpcaoExcluirItem(sistema),
+                    new OpcaoGerenciarUsuarios(sistema),
+                    new OpcaoGerenciarItens(sistema),
                 },
                 null
             )
         );
 
         sistema.registrarMenu(
-            IdMenu.CRIACAO,
+            IdMenu.GERENCIAR_USUARIOS,
             new Menu(
                 sistema,
-                "Criação de Itens",
+                "Gerenciar Usuários",
                 new Opcao[] {
-                    new OpcaoCriarExposicao(sistema),
-                    new OpcaoCriarNucleo(sistema),
-                    new OpcaoCriarObra(sistema),
+                    new OpcaoConsultarUsuario(sistema),
+                    // new OpcaoCadastrarUsuario(sistema),
+                    new OpcaoAtualizarUsuario(sistema),
+                    new OpcaoDesativarUsuario(sistema),
+                    new OpcaoAtivarUsuario(sistema),
                 },
                 IdMenu.PRINCIPAL
             )
         );
 
         sistema.registrarMenu(
-            IdMenu.GERENCIAMENTO,
+            IdMenu.GERENCIAR_ITENS,
             new Menu(
                 sistema,
-                "Gerenciamento de Itens",
+                "Gerenciar Itens",
                 new Opcao[] {
-                    new OpcaoGerenciarExposicao(sistema),
-                    new OpcaoGerenciarNucleo(sistema),
-                    new OpcaoGerenciarObra(sistema),
+                    new OpcaoConsultarItem(sistema),
+                    new OpcaoCriarItem(sistema),
+                    new OpcaoExcluirItem(sistema),
                 },
                 IdMenu.PRINCIPAL
             )

@@ -1,4 +1,4 @@
-package sistema.menu.principal;
+package sistema.menu.item;
 
 import sistema.Sistema;
 import sistema.menu.Opcao;
