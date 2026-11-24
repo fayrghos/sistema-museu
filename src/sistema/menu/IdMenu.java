@@ -1,7 +1,7 @@
 package sistema.menu;
 
 public enum IdMenu {
-    INICIAL,
+    AUTENTICACAO,
     PRINCIPAL,
     CRIACAO,
     GERENCIAMENTO,

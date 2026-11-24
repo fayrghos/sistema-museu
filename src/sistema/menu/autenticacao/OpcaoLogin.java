@@ -1,4 +1,4 @@
-package sistema.menu.inicial;
+package sistema.menu.autenticacao;
 
 import sistema.Sistema;
 import sistema.menu.IdMenu;
