@@ -1,5 +1,8 @@
 package autenticacao;
 
+import utilidades.hash.SenhaHash;
+import utilidades.validacao.EmailValidacao;
+
 import java.util.ArrayList;
 
 public class Usuario {
@@ -38,48 +41,66 @@ public class Usuario {
         boolean administrador,
         boolean curador
     ){
-        
-        return new Usuario(id, nome,email,senha,ativo,administrador,curador);
+        if (!EmailValidacao.validarEmail(email)) {
+            throw new IllegalArgumentException("E-mail inválido!");
+        }
+
+        String senhaHash = SenhaHash.gerarHash(senha);
+        Usuario novoUsuario = new Usuario(id, nome,email,senhaHash,ativo,administrador,curador);
+
+        // Chamar função e salva no banco
+        return novoUsuario;
     }
     
     public int getId(){
         return id;
     }
+
     public String getNome(){
         return nome;
     }
+
     public String getEmail(){
         return email;
     }
+
     public String getSenha(){
         return senha;
     }
+
     public boolean getAtivo(){
         return ativo;
     }
+
     public boolean getAdministrador(){
         return administrador;
     }
+
     public boolean getCurador(){
         return curador;
     }
 
-    public void setNome(String nome){
+    private void setNome(String nome){
         this.nome = nome;
     }
-    public void setEmail(String email){
+
+    private void setEmail(String email){
         this.email = email;
     }
-    public void setSenha(String senha){
+
+    private void setSenha(String senha){
         this.senha = senha;
     }
-    public void setAtivo(boolean ativo){
+
+    private void setAtivo(boolean ativo){
         this.ativo = ativo;
     }
-    public void setAdministrador(boolean administrador){
+
+    private void setAdministrador(boolean administrador){
         this.administrador = administrador;
     }
-    public void setCurador(boolean curador){
+
+    private void setCurador(boolean curador){
         this.curador = curador;
     }
 
