@@ -156,13 +156,15 @@ public class Usuario {
     }
 
     public void desativar(){
-        this.ativo = false;
+        setAtivo(false);
         System.out.println("A conta do usuário: " + nome+" foi desativada");
     }
+
     public void ativar(){
-        this.ativo = true;
+        setAtivo(true);
         System.out.println("A conta do usuário: " + nome+" foi ativada");
     }
+    
     public static ArrayList<Usuario> listarUsuario() {
 
         ArrayList<Usuario> lista = new ArrayList<>();
