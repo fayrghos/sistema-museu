@@ -12,6 +12,8 @@ public class Entrada {
                 System.out.print("Escolha: ");
                 int escolha = leitor.nextInt();
 
+                System.out.println();
+
                 if (escolha < 0 || escolha > quantOpcoes) {
                     throw new ArrayIndexOutOfBoundsException();
                 }

@@ -11,6 +11,7 @@ import sistema.menu.principal.OpcaoGerenciarItens;
 import sistema.menu.principal.OpcaoGerenciarUsuarios;
 import sistema.menu.usuario.OpcaoAtivarUsuario;
 import sistema.menu.usuario.OpcaoAtualizarUsuario;
+import sistema.menu.usuario.OpcaoCadastrarUsuario;
 import sistema.menu.usuario.OpcaoConsultarUsuario;
 import sistema.menu.usuario.OpcaoDesativarUsuario;
 
@@ -50,7 +51,7 @@ public class Main {
                 "Gerenciar Usuários",
                 new Opcao[] {
                     new OpcaoConsultarUsuario(sistema),
-                    // new OpcaoCadastrarUsuario(sistema),
+                    new OpcaoCadastrarUsuario(sistema),
                     new OpcaoAtualizarUsuario(sistema),
                     new OpcaoDesativarUsuario(sistema),
                     new OpcaoAtivarUsuario(sistema),

@@ -7,8 +7,8 @@ public abstract class Opcao {
     protected Sistema sistema;
 
     public String titulo;
-    public boolean visivelAdmin = false;
-    public boolean visivelCurador = false;
+    public boolean visivelAdmin = true;
+    public boolean visivelCurador = true;
 
     public Opcao(Sistema sistema, String titulo) {
         this.sistema = sistema;
