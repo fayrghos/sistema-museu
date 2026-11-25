@@ -20,7 +20,6 @@ public class Usuario {
         String nome,
         String email,
         String senha,
-        boolean ativo,
         boolean administrador,
         boolean curador
     ){
@@ -28,7 +27,7 @@ public class Usuario {
         this.nome=nome;
         this.email=email;
         this.senha=senha;
-        this.ativo=ativo;
+        this.ativo=true;
         this.administrador=administrador;
         this.curador=curador;
     }
@@ -37,7 +36,6 @@ public class Usuario {
         String nome,
         String email,
         String senha,
-        boolean ativo,
         boolean administrador,
         boolean curador
     ){
@@ -56,7 +54,7 @@ public class Usuario {
         }
         
         String senhaHash = SenhaHash.gerarHash(senha);
-        Usuario novoUsuario = new Usuario(0, nome, email, senhaHash, ativo, administrador, curador);
+        Usuario novoUsuario = new Usuario(0, nome, email, senhaHash, administrador, curador);
 
         bancoUsuario.inserir(novoUsuario);
         return novoUsuario;
@@ -71,7 +69,7 @@ public class Usuario {
         boolean administrador,
         boolean curador
     ) {
-        return new Usuario(id, nome, email, senhaHash, ativo, administrador, curador);
+        return new Usuario(id, nome, email, senhaHash, administrador, curador);
     }
 
     public int getId(){

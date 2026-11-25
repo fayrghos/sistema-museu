@@ -68,13 +68,15 @@ public class InicializadorBanco {
     private static void criarAdminPadrao(Connection conn) throws SQLException {
         String sql = """
                 INSERT INTO USUARIO (email, nome, senha, ativo, administrador, curador)
-                VALUES (?, ?, ?, TRUE, TRUE, FALSE)
+                SELECT ?, ?, ?, TRUE, TRUE, FALSE
+                WHERE NOT EXISTS (SELECT 1 FROM USUARIO WHERE email = ?)
                 ON CONFLICT (email) DO NOTHING
                 """;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "admin@admin.com");
             ps.setString(2, "Administrador");
             ps.setString(3, SenhaHash.gerarHash("admin"));
+            ps.setString(4, "admin@admin.com");
             ps.executeUpdate();
         }
     }

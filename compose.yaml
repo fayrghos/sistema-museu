@@ -2,11 +2,11 @@ name: museu
 
 services:
   postgres:
-    image: postgres
+    image: postgres:18
     env_file: .env
     environment:
       POSTGRES_DB: museu
-    ports: [5433:5432]
+    ports: [5435:5432]
     volumes: [postgres:/var/lib/postgresql]
 
 volumes:
