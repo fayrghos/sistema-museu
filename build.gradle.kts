@@ -36,3 +36,9 @@ sourceSets {
         }
     }
 }
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+    systemProperty("stdout.encoding", "UTF-8")
+    systemProperty("file.encoding", "UTF-8")
+}

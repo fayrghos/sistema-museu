@@ -3,7 +3,7 @@ package autenticacao;
 import utilidades.hash.SenhaHash;
 import utilidades.validacao.EmailValidacao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario {
 
@@ -16,7 +16,7 @@ public class Usuario {
     private boolean curador;
 
     private Usuario(
-        int id, 
+        int id,
         String nome,
         String email,
         String senha,
@@ -32,8 +32,8 @@ public class Usuario {
         this.administrador=administrador;
         this.curador=curador;
     }
+
     public static Usuario criarUsuario(
-        int id, 
         String nome,
         String email,
         String senha,
@@ -45,13 +45,31 @@ public class Usuario {
             throw new IllegalArgumentException("E-mail inválido!");
         }
 
-        String senhaHash = SenhaHash.gerarHash(senha);
-        Usuario novoUsuario = new Usuario(id, nome,email,senhaHash,ativo,administrador,curador);
+        UsuarioDAO bancoUsuario = new UsuarioDAO();
 
-        // Chamar função e salva no banco
+        if (bancoUsuario.buscarPorEmail(email) != null) {
+            throw new IllegalArgumentException("E-mail já existe no sistema!");
+        }
+
+        String senhaHash = SenhaHash.gerarHash(senha);
+        Usuario novoUsuario = new Usuario(0, nome, email, senhaHash, ativo, administrador, curador);
+
+        bancoUsuario.inserir(novoUsuario);
         return novoUsuario;
     }
-    
+
+    public static Usuario recuperarDoBanco(
+        int id,
+        String nome,
+        String email,
+        String senhaHash,
+        boolean ativo,
+        boolean administrador,
+        boolean curador
+    ) {
+        return new Usuario(id, nome, email, senhaHash, ativo, administrador, curador);
+    }
+
     public int getId(){
         return id;
     }
@@ -80,6 +98,13 @@ public class Usuario {
         return curador;
     }
 
+    public void setId(int id) {
+        if (this.id != 0) {
+            throw new IllegalStateException("O id do usuário já foi definido e não pode ser alterado.");
+        }
+        this.id = id;
+    }
+
     private void setNome(String nome){
         this.nome = nome;
     }
@@ -106,9 +131,9 @@ public class Usuario {
 
     public void verUsuario() {
         System.out.println("-------------Dados Usuário-------------");
-        System.out.println("Nome: "+ nome + "\nE-mail: "+email);
+        System.out.println("ID: "+ id + "\nNome: "+ nome + "\nE-mail: "+email);
         System.out.println(
-            "Conta: " + (ativo?"Ativa":"Desativada") + 
+            "Conta: " + (ativo?"Ativa":"Desativada") +
             "\nAdministrador: " + (administrador?"Sim":"Não")+
             "\nCurador: " + (curador?"Sim":"Não")
         );
@@ -125,8 +150,18 @@ public class Usuario {
             return;
         }
 
+        UsuarioDAO banco = new UsuarioDAO();
+
+        // Valida tudo antes de alterar qualquer campo
         if (emailValido) {
-            // Consulta no banco: se o e-mail já existir em outro usuário, avisa e dá return;
+            if (!EmailValidacao.validarEmail(email)) {
+                throw new IllegalArgumentException("E-mail inválido!");
+            }
+
+            Usuario existente = banco.buscarPorEmail(email);
+            if (existente != null && existente.getId() != this.id) {
+                throw new IllegalArgumentException("E-mail já existe no sistema!");
+            }
             setEmail(email);
         }
 
@@ -135,46 +170,68 @@ public class Usuario {
         }
 
         if (senhaValida) {
-            setSenha(senha);
+            setSenha(SenhaHash.gerarHash(senha));
         }
 
+        banco.atualizar(this);
         System.out.println("Perfil do Usuário atualizado!");
     }
 
     public void alterarPermissoes(boolean administrador, boolean curador){
 
         if (!curador && !administrador) {
-            System.out.println("Não é permitido ficar sem cargo!");
-            return;
+            throw new IllegalArgumentException("Não é permitido ficar sem cargo!");
         }
-        
 
-        // TODO: Bloquear ação de ZERAR OS ADMINISTRADORES DO SISTEMA USO DO BANCO DE DADOS
+        UsuarioDAO banco = new UsuarioDAO();
+
+        // Só bloqueia se é admin ativo agora e está deixando de ser
+        boolean deixandoDeSerAdmin = this.administrador && !administrador;
+        if (deixandoDeSerAdmin && this.ativo && banco.contarAdministradoresAtivos() <= 1) {
+            throw new IllegalArgumentException("Você é o único administrador, não é possível alterar permissão!");
+        }
+
         setAdministrador(administrador);
         setCurador(curador);
+        banco.atualizar(this);
         System.out.println("As permissões do Usuário foram atualizadas!");
     }
 
     public void desativar(){
+
+        UsuarioDAO banco = new UsuarioDAO();
+
+        // Só bloqueia se é admin ativo (o último)
+        if (this.administrador && this.ativo && banco.contarAdministradoresAtivos() <= 1) {
+            throw new IllegalArgumentException("Você é o único administrador, não é possível desativar a conta!");
+        }
+
         setAtivo(false);
-        System.out.println("A conta do usuário: " + nome+" foi desativada");
+        banco.atualizar(this);
+        System.out.println("A conta do usuário: " + nome + " foi desativada");
     }
 
     public void ativar(){
         setAtivo(true);
-        System.out.println("A conta do usuário: " + nome+" foi ativada");
+        new UsuarioDAO().atualizar(this);
+        System.out.println("A conta do usuário: " + nome + " foi ativada");
     }
-    
-    public static ArrayList<Usuario> listarUsuario() {
 
-        ArrayList<Usuario> lista = new ArrayList<>();
+    public static List<Usuario> listarUsuario() {
+        return new UsuarioDAO().listarTodos();
+    }
 
-        if (lista.isEmpty()) {
-            System.out.println("Lista Vazia");
-            return null;
+    public static boolean autenticar(String email, String senha) {
+        if (email == null || email.isBlank() || senha == null || senha.isBlank()) {
+            return false;
         }
 
-        // Lógica da captura dos usuario do banco de dados
-        return lista;
+        Usuario usuario = new UsuarioDAO().buscarPorEmail(email);
+
+        if (usuario == null || !usuario.getAtivo()) {
+            return false;
+        }
+
+        return SenhaHash.verificarSenha(senha, usuario.getSenha());
     }
 }

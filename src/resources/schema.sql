@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS USUARIO (
     email VARCHAR(150) UNIQUE,
     nome VARCHAR(150),
     senha VARCHAR(255),
-    ativa BOOLEAN,
+    ativo BOOLEAN,
     administrador BOOLEAN,
     curador BOOLEAN
 );

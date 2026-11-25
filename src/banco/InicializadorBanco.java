@@ -1,6 +1,6 @@
 package banco;
 
-import org.mindrot.jbcrypt.BCrypt; // USAR FUNÇÃO DE HASH NA UTILIDADES
+import utilidades.hash.SenhaHash;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,14 +44,14 @@ public class InicializadorBanco {
 
     private static void criarAdminPadrao(Connection conn) throws SQLException {
         String sql = """
-                INSERT INTO USUARIO (email, nome, senha, ativa, administrador, curador)
+                INSERT INTO USUARIO (email, nome, senha, ativo, administrador, curador)
                 VALUES (?, ?, ?, TRUE, TRUE, FALSE)
                 ON CONFLICT (email) DO NOTHING
                 """;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "admin@admin.com");
             ps.setString(2, "Administrador");
-            ps.setString(3, BCrypt.hashpw("admin", BCrypt.gensalt()));
+            ps.setString(3, SenhaHash.gerarHash("admin"));
             ps.executeUpdate();
         }
     }
