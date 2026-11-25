@@ -16,6 +16,7 @@ import sistema.menu.usuario.OpcaoAtualizarUsuario;
 import sistema.menu.usuario.OpcaoCadastrarUsuario;
 import sistema.menu.usuario.OpcaoConsultarUsuario;
 import sistema.menu.usuario.OpcaoDesativarUsuario;
+import sistema.menu.usuario.OpcaoListarUsuario;
 
 public class Main {
 
@@ -60,6 +61,7 @@ public class Main {
                     new OpcaoAtualizarUsuario(sistema),
                     new OpcaoDesativarUsuario(sistema),
                     new OpcaoAtivarUsuario(sistema),
+                    new OpcaoListarUsuario(sistema),
                 },
                 IdMenu.PRINCIPAL
             )

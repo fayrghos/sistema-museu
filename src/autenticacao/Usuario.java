@@ -49,6 +49,10 @@ public class Usuario {
             throw new IllegalArgumentException("E-mail já existe no sistema!");
         }
 
+        if (!administrador && !curador) {
+            throw new IllegalArgumentException("O usuário não pode ficar sem cargo!");
+        }
+        
         String senhaHash = SenhaHash.gerarHash(senha);
         Usuario novoUsuario = new Usuario(0, nome, email, senhaHash, administrador, curador);
 
@@ -128,7 +132,7 @@ public class Usuario {
     }
 
     public void verUsuario() {
-        System.out.println("-------------Dados Usuário-------------");
+        System.out.println();
         System.out.println("ID: "+ id + "\nNome: "+ nome + "\nE-mail: "+email);
         System.out.println(
             "Conta: " + (ativo?"Ativa":"Desativada") +
@@ -206,13 +210,13 @@ public class Usuario {
 
         setAtivo(false);
         banco.atualizar(this);
-        System.out.println("A conta do usuário: " + nome + " foi desativada");
+        System.out.println("A conta do usuário '" + nome + "' foi desativada");
     }
 
     public void ativar(){
         setAtivo(true);
         new UsuarioDAO().atualizar(this);
-        System.out.println("A conta do usuário: " + nome + " foi ativada");
+        System.out.println("A conta do usuário '" + nome + "' foi ativada");
     }
 
     public static List<Usuario> listarUsuario() {

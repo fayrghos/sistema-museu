@@ -21,11 +21,12 @@ public final class OpcaoCadastrarUsuario extends Opcao {
                 Entrada.lerBooleano("Deve ser administrador", sistema.leitor()),
                 Entrada.lerBooleano("Deve ser curador", sistema.leitor())
             );
+
+            System.out.println("Usuário criado com sucesso!");
         } catch (IllegalArgumentException err) {
             System.out.println(err.getMessage());
         }
 
-        System.out.println("Usuário criado com sucesso!");
         sistema.aguardarConfirmacao();
     }
 }
