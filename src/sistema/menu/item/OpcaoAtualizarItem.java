@@ -1,16 +1,17 @@
-package sistema.menu.principal;
+package sistema.menu.item;
 
 import sistema.Sistema;
 import sistema.menu.Opcao;
 
-public final class OpcaoAtualizarIte extends Opcao {
+public final class OpcaoAtualizarItem extends Opcao {
 
-    public OpcaoAtualizarIte(Sistema sistema) {
+    public OpcaoAtualizarItem(Sistema sistema) {
         super(sistema, "Atualizar Item", true, false);
     }
 
     @Override
     public void interagir() {
         System.out.println("Não implementado.");
+        sistema.aguardarConfirmacao();
     }
 }

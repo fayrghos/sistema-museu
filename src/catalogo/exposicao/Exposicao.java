@@ -16,6 +16,25 @@ public class Exposicao {
     private String textoApresentacao;
     private StatusExposicao status;
 
+
+    public Exposicao(int id, String titulo, String tema,
+        String conceito, String objetivos, String descricao,
+        Date periodoInicioPrevisto, Date periodoFimPrevisto,
+        String textoApresentacao, StatusExposicao status) {
+
+        this.id = id;
+        this.titulo = titulo;
+        this.tema = tema;
+        this.conceito = conceito;
+        this.objetivos = objetivos;
+        this.descricao = descricao;
+        this.periodoInicioPrevisto = periodoInicioPrevisto;
+        this.periodoFimPrevisto = periodoFimPrevisto;
+        this.textoApresentacao = textoApresentacao;
+        this.status = status;
+    }
+
+
     private Exposicao(Usuario usuario, String titulo, String tema, String conceito, String objetivos, String descricao, Date periodoInicioPrevisto, Date periodoFimPrevisto, String textoApresentacao){
         this.titulo = titulo;
         this.tema = tema;
@@ -29,20 +48,19 @@ public class Exposicao {
     }
 
     public static Exposicao criarExposicao(Usuario usuario, String titulo, String tema, String conceito, String objetivos, String descricao, Date periodoInicioPrevisto, Date periodoFimPrevisto, String textoApresentacao){
-        return new Exposicao(usuario, titulo, tema, conceito, objetivos, descricao, periodoInicioPrevisto, periodoFimPrevisto, textoApresentacao);
+        Exposicao exposicao = new Exposicao(usuario, titulo, tema, conceito, objetivos, descricao, periodoInicioPrevisto, periodoFimPrevisto, textoApresentacao);
+
+        ExposicaoDAO dao = new ExposicaoDAO();
+
+        dao.inserir(exposicao, usuario);
+        // criar exposição: passa -> id exposicao, id usuario, id status_exposicao, titulo, tema, conceito, objetivos, descricao, periodo_inicio_previsto, periodo_fim_previsto, texto_apresentacao
+
+        return exposicao;
     }
 
-    public void verExposicao(){
-        System.out.println("ID: " + id);
-        System.out.println("Título: " + titulo);
-        System.out.println("Tema: " + tema);
-        System.out.println("Conceito: " + conceito);
-        System.out.println("Objetivos: " + objetivos);
-        System.out.println("Descrição: " + descricao);
-        System.out.println("Previsão para Início: " + periodoInicioPrevisto);
-        System.out.println("Previsão para término: " + periodoFimPrevisto);
-        System.out.println("Apresentação: " + textoApresentacao);
-        System.out.println("Status: " + status);
+    public Exposicao verExposicao() {
+        ExposicaoDAO dao = new ExposicaoDAO();
+        return dao.buscarPorId(id);
     }
 
     public void editarExposicao(String titulo, String tema, String conceito, String objetivos, String descricao, Date periodoInicioPrevisto, Date periodoFimPrevisto, String textoApresentacao){
@@ -55,37 +73,52 @@ public class Exposicao {
         this.periodoFimPrevisto = periodoFimPrevisto;
         this.textoApresentacao = textoApresentacao;
 
-        
+        ExposicaoDAO dao = new ExposicaoDAO();
+        dao.atualizar(id, this);
     }
 
     public void excluirExposicao(){
-        // exclui uma exposição
+        ExposicaoDAO dao = new ExposicaoDAO();
+        dao.excluirExposicao(id);
     }
 
     public static List<Exposicao> listarExposicoes(){
-        // retorna todas as exposições do banco de dados
+        ExposicaoDAO dao = new ExposicaoDAO();
+        List<Exposicao> exposicoes;
+        exposicoes = dao.listarTodos();
+        return exposicoes;
     }
 
     public static List<Exposicao> buscarPorTitulo(String titulo){
-        // retorna todas as exposições com o título x no banco de dados
+        ExposicaoDAO dao = new ExposicaoDAO();
+        return dao.buscarPorTitulo(titulo);
     }
 
     public static List<Exposicao> buscarPorTema(String tema){
-        // retorna todas as exposições com o tema x no banco de dados
+        ExposicaoDAO dao = new ExposicaoDAO();
+        return dao.buscarPorTema(tema);
     }
 
-    public void iniciarDesenvolvimento(){
-        status = StatusExposicao.EM_DESENVOLVIMENTO;
+    public void iniciarDesenvolvimento() {
+    status = StatusExposicao.EM_DESENVOLVIMENTO;
+
+    ExposicaoDAO dao = new ExposicaoDAO();
+    dao.atualizar(id, this);
     }
 
     public void concluirExposicao(){
         status = StatusExposicao.CONCLUIDA;
+
+        ExposicaoDAO dao = new ExposicaoDAO();
+        dao.atualizar(id, this);
     }
 
     public void reabrirExposicao(){
         status = StatusExposicao.EM_DESENVOLVIMENTO;
-    }
 
+        ExposicaoDAO dao = new ExposicaoDAO();
+        dao.atualizar(id, this);
+    }
 
     public int getId() {
         return id;
@@ -125,5 +158,9 @@ public class Exposicao {
 
     public StatusExposicao getStatus() {
         return status;
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
 }

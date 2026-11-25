@@ -1,38 +1,39 @@
+/**
+ * Representa o ponto de partida do programa.
+ */
+import banco.InicializadorBanco;
 import java.util.Scanner;
 import sistema.Sistema;
 import sistema.menu.IdMenu;
 import sistema.menu.Menu;
 import sistema.menu.Opcao;
-import sistema.menu.criacao.OpcaoExposicaoCri;
-import sistema.menu.criacao.OpcaoNucleoCri;
-import sistema.menu.criacao.OpcaoObraCri;
-import sistema.menu.gerenciamento.OpcaoExposicaoGer;
-import sistema.menu.gerenciamento.OpcaoNucleoGer;
-import sistema.menu.gerenciamento.OpcaoObraGer;
-import sistema.menu.inicial.OpcaoCadastro;
-import sistema.menu.inicial.OpcaoLogin;
-import sistema.menu.principal.OpcaoAtivar;
-import sistema.menu.principal.OpcaoAtualizarUsu;
-import sistema.menu.principal.OpcaoConsultarIte;
-import sistema.menu.principal.OpcaoConsultarUsu;
-import sistema.menu.principal.OpcaoCriar;
-import sistema.menu.principal.OpcaoDesativar;
-import sistema.menu.principal.OpcaoExcluir;
+import sistema.menu.autenticacao.OpcaoLogin;
+import sistema.menu.item.OpcaoConsultarItem;
+import sistema.menu.item.OpcaoCriarItem;
+import sistema.menu.item.OpcaoExcluirItem;
+import sistema.menu.principal.OpcaoGerenciarItens;
+import sistema.menu.principal.OpcaoGerenciarUsuarios;
+import sistema.menu.usuario.OpcaoAtivarUsuario;
+import sistema.menu.usuario.OpcaoAtualizarUsuario;
+import sistema.menu.usuario.OpcaoCadastrarUsuario;
+import sistema.menu.usuario.OpcaoConsultarUsuario;
+import sistema.menu.usuario.OpcaoDesativarUsuario;
 
 public class Main {
 
     public static void main(String[] args) {
+
+        InicializadorBanco.inicializar();
+
         Scanner leitor = new Scanner(System.in);
         Sistema sistema = new Sistema(leitor);
 
         sistema.registrarMenu(
-            IdMenu.INICIAL,
+            IdMenu.AUTENTICACAO,
             new Menu(
                 sistema,
-                new Opcao[] {
-                    new OpcaoLogin(sistema),
-                    new OpcaoCadastro(sistema),
-                },
+                "Autenticação",
+                new Opcao[] { new OpcaoLogin(sistema) },
                 null
             )
         );
@@ -41,47 +42,48 @@ public class Main {
             IdMenu.PRINCIPAL,
             new Menu(
                 sistema,
+                "Menu Principal",
                 new Opcao[] {
-                    new OpcaoAtivar(sistema),
-                    new OpcaoDesativar(sistema),
-                    new OpcaoConsultarUsu(sistema),
-                    new OpcaoAtualizarUsu(sistema),
-                    new OpcaoCriar(sistema),
-                    new OpcaoConsultarIte(sistema),
-                    new OpcaoExcluir(sistema),
+                    new OpcaoGerenciarUsuarios(sistema),
+                    new OpcaoGerenciarItens(sistema),
                 },
-                IdMenu.INICIAL
+                null
             )
         );
 
         sistema.registrarMenu(
-            IdMenu.CRIACAO,
+            IdMenu.GERENCIAR_USUARIOS,
             new Menu(
                 sistema,
+                "Gerenciar Usuários",
                 new Opcao[] {
-                    new OpcaoExposicaoCri(sistema),
-                    new OpcaoNucleoCri(sistema),
-                    new OpcaoObraCri(sistema),
+                    new OpcaoConsultarUsuario(sistema),
+                    new OpcaoCadastrarUsuario(sistema),
+                    new OpcaoAtualizarUsuario(sistema),
+                    new OpcaoDesativarUsuario(sistema),
+                    new OpcaoAtivarUsuario(sistema),
                 },
-                IdMenu.INICIAL
+                IdMenu.PRINCIPAL
             )
         );
 
         sistema.registrarMenu(
-            IdMenu.GERENCIAMENTO,
+            IdMenu.GERENCIAR_ITENS,
             new Menu(
                 sistema,
+                "Gerenciar Itens",
                 new Opcao[] {
-                    new OpcaoExposicaoGer(sistema),
-                    new OpcaoNucleoGer(sistema),
-                    new OpcaoObraGer(sistema),
+                    new OpcaoConsultarItem(sistema),
+                    new OpcaoCriarItem(sistema),
+                    new OpcaoExcluirItem(sistema),
                 },
-                IdMenu.INICIAL
+                IdMenu.PRINCIPAL
             )
         );
 
-        sistema.alterarMenu(IdMenu.INICIAL);
+        sistema.alterarMenu(IdMenu.AUTENTICACAO);
         System.out.println("Bem-vindo(a) ao gerenciador do museu!");
+        System.out.println();
 
         while (sistema.rodando()) {
             sistema.menuAtivo().imprimir();
