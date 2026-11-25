@@ -1,10 +1,8 @@
 package catalogo.nucleo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import catalogo.exposicao.Exposicao;
-import catalogo.obra.Obra;
 
 public class NucleoTematico {
 
@@ -15,9 +13,6 @@ public class NucleoTematico {
     private int ordem;
 
     private Exposicao exposicao;
-
-    private static int proximoId = 1;
-    private static List<NucleoTematico> nucleos = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -43,52 +38,68 @@ public class NucleoTematico {
         return exposicao;
     }
 
-    private NucleoTematico(Exposicao exposicao, String titulo, String descricao, String textoContextualizacao, int ordem) {
+    public void setId(int id) {
+        if (this.id != 0) {
+            throw new IllegalStateException("O ID do núcleo já foi definido.");
+        }
 
-        this.id = proximoId++;
+        if (id <= 0) {
+            throw new IllegalArgumentException("O ID deve ser positivo.");
+        }
+
+        this.id = id;
+    }
+
+    private NucleoTematico(int id, Exposicao exposicao, String titulo, String descricao, String textoContextualizacao,
+            int ordem) {
+
+        this.id = id;
         this.exposicao = exposicao;
         this.titulo = titulo;
         this.descricao = descricao;
         this.textoContextualizacao = textoContextualizacao;
         this.ordem = ordem;
+
+    }
+
+    public static NucleoTematico recuperarDoBanco(int id, Exposicao exposicao, String titulo, String descricao,
+            String textoContextualizacao, int ordem) {
+
+        return new NucleoTematico(
+                id,
+                exposicao,
+                titulo,
+                descricao,
+                textoContextualizacao,
+                ordem);
     }
 
     public static NucleoTematico criarNucleo(Exposicao exposicao, String titulo, String descricao,
             String textoContextualizacao, int ordem) {
 
-        if (exposicao == null) {
+        if (exposicao == null || exposicao.getId() <= 0) {
             return null;
         }
 
-        NucleoTematico novoNucleo = new NucleoTematico(exposicao, titulo, descricao, textoContextualizacao, ordem);
+        NucleoTematico novoNucleo = new NucleoTematico(0, exposicao, titulo, descricao, textoContextualizacao, ordem);
 
-        nucleos.add(novoNucleo);
+        new NucleoTematicoDAO().inserir(novoNucleo);
 
         return novoNucleo;
     }
 
     public static List<NucleoTematico> listarNucleo() {
-        return new ArrayList<>(nucleos);
+        return new NucleoTematicoDAO().listarTodos();
     }
 
     public static List<NucleoTematico> buscarPorTitulo(String titulo) {
 
-        List<NucleoTematico> resultado = new ArrayList<>();
-
         if (titulo == null || titulo.isBlank()) {
-            return resultado;
+            return List.of();
         }
 
-        for (NucleoTematico nucleo : nucleos) {
-
-            if (nucleo.getTitulo().toLowerCase()
-                    .contains(titulo.toLowerCase())) {
-
-                resultado.add(nucleo);
-            }
-        }
-
-        return resultado;
+        return new NucleoTematicoDAO()
+                .buscarPorTitulo(titulo.trim());
     }
 
     public void verNucleo() {
@@ -102,6 +113,11 @@ public class NucleoTematico {
 
     public void editarNucleo(String titulo, String descricao, String textoContextualizacao, int ordem) {
 
+        NucleoTematico nucleoAtualizado = recuperarDoBanco(this.id, this.exposicao, titulo, descricao,
+                textoContextualizacao, ordem);
+
+        new NucleoTematicoDAO().atualizar(nucleoAtualizado);
+
         this.titulo = titulo;
         this.descricao = descricao;
         this.textoContextualizacao = textoContextualizacao;
@@ -110,14 +126,14 @@ public class NucleoTematico {
 
     public void excluirNucleo() {
 
-        for (Obra obra : Obra.listarObras()) {
-            if (obra.getNucleoTematico() == this) {
-                System.out.println(
-                        "Não é possível excluir: o núcleo possui obras vinculadas.");
-                return;
-            }
+        NucleoTematicoDAO banco = new NucleoTematicoDAO();
+
+        if (banco.possuiObras(this.id)) {
+            System.out.println("Não é possível excluir: o núcleo possui obras vinculadas.");
+            return;
         }
-        nucleos.remove(this);
+
+        banco.excluir(this.id);
     }
 
 }
