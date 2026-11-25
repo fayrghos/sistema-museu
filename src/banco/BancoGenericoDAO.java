@@ -46,12 +46,16 @@ public abstract class BancoGenericoDAO<T> {
     }
 
     public void atualizar(int id, T obj) {
-        List<String> colunas = colunasInsercao();
+        List<String> colunas = colunasAtualizacao();
         List<String> atribuicoes = new ArrayList<>();
+
         for (String coluna : colunas) {
             atribuicoes.add(coluna + " = ?");
         }
-        String sql = "UPDATE " + tabela() + " SET " + String.join(", ", atribuicoes)+ " WHERE " + colunaId() + " = ?";
+
+        String sql = "UPDATE " + tabela()
+                + " SET " + String.join(", ", atribuicoes)
+                + " WHERE " + colunaId() + " = ?";
 
         try (Connection conn = ConexaoBD.getConexao();
             PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -61,9 +65,12 @@ public abstract class BancoGenericoDAO<T> {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao atualizar em " + tabela() + ": " + e.getMessage(), e);
+            throw new RuntimeException(
+                "Erro ao atualizar em " + tabela() + ": " + e.getMessage(), e
+            );
         }
     }
+
     public List<T> listarTodos() {
         return consultar("SELECT * FROM " + tabela());
     }
@@ -93,5 +100,26 @@ public abstract class BancoGenericoDAO<T> {
         }
         return lista;
     }
+
+    public List<String> colunasAtualizacao() {
+    return colunasInsercao();
+    }
+
+    public void excluir(int id) {
+    String sql = "DELETE FROM " + tabela()
+               + " WHERE " + colunaId() + " = ?";
+
+    try (Connection conn = ConexaoBD.getConexao();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setInt(1, id);
+        ps.executeUpdate();
+
+    } catch (SQLException e) {
+        throw new RuntimeException(
+            "Erro ao excluir em " + tabela() + ": " + e.getMessage(), e
+        );
+    }
+}
 
 }

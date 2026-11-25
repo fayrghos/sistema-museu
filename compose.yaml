@@ -6,7 +6,7 @@ services:
     env_file: .env
     environment:
       POSTGRES_DB: museu
-    ports: [5432:5432]
+    ports: [5433:5432]
     volumes: [postgres:/var/lib/postgresql]
 
 volumes:
