@@ -84,4 +84,44 @@ public class Exposicao {
         status = StatusExposicao.EM_DESENVOLVIMENTO;
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getTema() {
+        return tema;
+    }
+
+    public String getConceito() {
+        return conceito;
+    }
+
+    public String getObjetivos() {
+        return objetivos;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public Date getPeriodoInicioPrevisto() {
+        return periodoInicioPrevisto;
+    }
+
+    public Date getPeriodoFimPrevisto() {
+        return periodoFimPrevisto;
+    }
+
+    public String getTextoApresentacao() {
+        return textoApresentacao;
+    }
+
+    public StatusExposicao getStatus() {
+        return status;
+    }
 }
