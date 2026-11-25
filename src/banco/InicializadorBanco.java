@@ -13,19 +13,42 @@ import java.sql.Statement;
 public class InicializadorBanco {
 
     public static void inicializar() {
+        if (ConexaoBD.USUARIO.isBlank() || ConexaoBD.SENHA.isBlank()) {
+            System.err.println(
+                "Por favor, configure as credenciais do banco de dados no arquivo .env."
+            );
+            System.exit(1);
+        }
+        
         try (Connection conn = ConexaoBD.getConexao()) {
             conn.setAutoCommit(false);
             try {
                 criarTabelas(conn);
                 criarAdminPadrao(conn);
                 conn.commit();
-                System.out.println("[BD] Banco inicializado com sucesso.");
             } catch (Exception e) {
                 conn.rollback();
                 throw e;
             }
-        } catch (Exception e) {
-            throw new RuntimeException("Falha ao inicializar o banco de dados", e);
+        } catch (SQLException err) {
+            String estado = err.getSQLState();
+
+            if (estado.equals("08001")) {
+                System.err.println(
+                    "Não foi possível conectar ao banco de dados. Ele está rodando?"
+                );
+            } else if (estado.equals("28P01")) {
+                System.err.println(
+                    "O banco de dados está rodando, mas rejeitou as credenciais."
+                );
+            } else {
+                System.err.println(err);
+            }
+
+            System.exit(1);
+        } catch (Exception err) {
+            System.err.println("Um erro desconhecido ocorreu no banco de dados.");
+            System.exit(1);
         }
     }
 
