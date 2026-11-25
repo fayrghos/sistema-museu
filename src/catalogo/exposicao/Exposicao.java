@@ -54,6 +54,8 @@ public class Exposicao {
         this.periodoInicioPrevisto = periodoInicioPrevisto;
         this.periodoFimPrevisto = periodoFimPrevisto;
         this.textoApresentacao = textoApresentacao;
+
+        
     }
 
     public void excluirExposicao(){
