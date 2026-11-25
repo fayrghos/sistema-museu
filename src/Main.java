@@ -8,6 +8,7 @@ import sistema.menu.autenticacao.OpcaoLogin;
 import sistema.menu.item.OpcaoConsultarItem;
 import sistema.menu.item.OpcaoCriarItem;
 import sistema.menu.item.OpcaoExcluirItem;
+import sistema.menu.principal.OpcaoDeslogar;
 import sistema.menu.principal.OpcaoGerenciarItens;
 import sistema.menu.principal.OpcaoGerenciarUsuarios;
 import sistema.menu.usuario.OpcaoAtivarUsuario;
@@ -42,6 +43,7 @@ public class Main {
                 new Opcao[] {
                     new OpcaoGerenciarUsuarios(sistema),
                     new OpcaoGerenciarItens(sistema),
+                    new OpcaoDeslogar(sistema),
                 },
                 null
             )

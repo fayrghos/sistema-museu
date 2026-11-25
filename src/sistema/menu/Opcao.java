@@ -5,26 +5,29 @@ import sistema.Sistema;
 public abstract class Opcao {
 
     protected Sistema sistema;
+    protected final boolean usavelDeslogado;
 
     public String titulo;
-    public boolean visivelAdmin = true;
-    public boolean visivelCurador = true;
+    public boolean requerAdmin = true;
+    public boolean requerCurador = true;
 
     public Opcao(Sistema sistema, String titulo) {
         this.sistema = sistema;
         this.titulo = titulo;
+        this.usavelDeslogado = true;
     }
 
     public Opcao(
         Sistema sistema,
         String titulo,
-        boolean visivelAdmin,
-        boolean visivelCurador
+        boolean requerAdmin,
+        boolean requerCurador
     ) {
         this.sistema = sistema;
         this.titulo = titulo;
-        this.visivelAdmin = visivelAdmin;
-        this.visivelCurador = visivelCurador;
+        this.requerAdmin = requerAdmin;
+        this.requerCurador = requerCurador;
+        this.usavelDeslogado = false;
     }
 
     public void imprimir(int indice) {
