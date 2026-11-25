@@ -1,3 +1,7 @@
+/**
+ * Representa o ponto de partida do programa.
+ */
+import banco.InicializadorBanco;
 import java.util.Scanner;
 import sistema.Sistema;
 import sistema.menu.IdMenu;
@@ -18,6 +22,9 @@ import sistema.menu.usuario.OpcaoDesativarUsuario;
 public class Main {
 
     public static void main(String[] args) {
+
+        InicializadorBanco.inicializar();
+
         Scanner leitor = new Scanner(System.in);
         Sistema sistema = new Sistema(leitor);
 
