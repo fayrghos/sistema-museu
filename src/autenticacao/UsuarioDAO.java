@@ -46,7 +46,7 @@ public class UsuarioDAO extends BancoGenericoDAO<Usuario> {
             rs.getBoolean("curador")
         );
     }
-    
+
     public void atualizar(Usuario u) {
         atualizar(u.getId(), u);
     }
@@ -56,7 +56,6 @@ public class UsuarioDAO extends BancoGenericoDAO<Usuario> {
         u.setId(id);
     }
 
-    // Buscas específicas
     public Usuario buscarPorEmail(String email) {
         List<Usuario> r = consultar("SELECT * FROM USUARIO WHERE LOWER(email) = LOWER(?)", email);
         return r.isEmpty() ? null : r.get(0);
