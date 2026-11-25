@@ -56,11 +56,6 @@ public class UsuarioDAO extends BancoGenericoDAO<Usuario> {
         u.setId(id);
     }
 
-    // Buscas específicas
-    public Usuario buscarPorId(Int id){
-        
-    }
-
     public Usuario buscarPorEmail(String email) {
         List<Usuario> r = consultar("SELECT * FROM USUARIO WHERE LOWER(email) = LOWER(?)", email);
         return r.isEmpty() ? null : r.get(0);
