@@ -18,6 +18,10 @@ sourceSets {
     }
 }
 
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
+
 application {
     mainClass = "Main"
 }
