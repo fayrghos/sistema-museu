@@ -65,3 +65,16 @@ CREATE TABLE IF NOT EXISTS OBRA (
     CONSTRAINT fk_obra_nucleo
         FOREIGN KEY (id_nucleo_tematico) REFERENCES NUCLEO_TEMATICO(id_nucleo_tematico)
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS uq_categoria_obra_nome
+ON CATEGORIA_OBRA (nome);
+
+INSERT INTO CATEGORIA_OBRA (nome)
+VALUES
+    ('PINTURA'),
+    ('ESCULTURA'),
+    ('FOTOGRAFIA'),
+    ('INSTALACAO'),
+    ('DOCUMENTO'),
+    ('OUTRA')
+ON CONFLICT (nome) DO NOTHING;

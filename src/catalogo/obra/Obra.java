@@ -1,6 +1,5 @@
 package catalogo.obra;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import catalogo.nucleo.NucleoTematico;
@@ -17,13 +16,9 @@ public class Obra {
 
     private NucleoTematico nucleoTematico;
 
-    private static int proximoId = 1;
-    private static List<Obra> obras = new ArrayList<>();
-
-    private Obra(String titulo, String autoria, int ano, String tecnica, String descricao, CategoriaObra categoria,
-            String legenda) {
-
-        this.id = proximoId++;
+    private Obra(int id, String titulo, String autoria, int ano, String tecnica, String descricao,
+            CategoriaObra categoria, String legenda) {
+        this.id = id;
         this.titulo = titulo;
         this.autoria = autoria;
         this.ano = ano;
@@ -31,6 +26,18 @@ public class Obra {
         this.descricao = descricao;
         this.categoria = categoria;
         this.legenda = legenda;
+    }
+
+    public void setId(int id) {
+        if (this.id != 0) {
+            throw new IllegalStateException("O ID da obra já foi definido.");
+        }
+
+        if (id <= 0) {
+            throw new IllegalArgumentException("O ID deve ser positivo.");
+        }
+
+        this.id = id;
     }
 
     public int getId() {
@@ -69,60 +76,70 @@ public class Obra {
         return nucleoTematico;
     }
 
+    public static Obra recuperarDoBanco(int id, String titulo, String autoria, int ano, String tecnica,
+            String descricao, CategoriaObra categoria, String legenda, NucleoTematico nucleoTematico) {
+        Obra obra = new Obra(id, titulo, autoria, ano, tecnica, descricao, categoria, legenda);
+
+        obra.nucleoTematico = nucleoTematico;
+
+        return obra;
+    }
+
     public static Obra criarObra(String titulo, String autoria, int ano, String tecnica, String descricao,
             CategoriaObra categoria, String legenda) {
 
         Obra novaObra = new Obra(
-                titulo, autoria, ano, tecnica,
-                descricao, categoria, legenda);
+                0,
+                titulo,
+                autoria,
+                ano,
+                tecnica,
+                descricao,
+                categoria,
+                legenda);
 
-        obras.add(novaObra);
+        new ObraDAO().inserir(novaObra);
 
         return novaObra;
     }
 
     public static List<Obra> listarObras() {
-        return new ArrayList<>(obras);
+        return new ObraDAO().listarTodos();
     }
 
     public static List<Obra> buscarPorTitulo(String titulo) {
 
-        List<Obra> resultado = new ArrayList<>();
-
         if (titulo == null || titulo.isBlank()) {
-            return resultado;
+            return List.of();
         }
 
-        for (Obra obra : obras) {
-
-            if (obra.getTitulo().toLowerCase()
-                    .contains(titulo.toLowerCase())) {
-
-                resultado.add(obra);
-            }
-        }
-
-        return resultado;
+        return new ObraDAO().buscarPorTitulo(titulo.trim());
     }
 
     public static List<Obra> buscarPorAutoria(String autoria) {
 
-        List<Obra> resultado = new ArrayList<>();
-
         if (autoria == null || autoria.isBlank()) {
-            return resultado;
+            return List.of();
         }
 
-        for (Obra obra : obras) {
+        return new ObraDAO().buscarPorAutoria(autoria.trim());
+    }
 
-            if (obra.getAutoria().toLowerCase()
-                    .contains(autoria.toLowerCase())) {
+    public void editarObra(String titulo, String autoria, int ano, String tecnica, String descricao,
+            CategoriaObra categoria, String legenda) {
 
-                resultado.add(obra);
-            }
-        }
+        Obra obraAtualizada = recuperarDoBanco(this.id, titulo, autoria, ano, tecnica, descricao, categoria, legenda,
+                this.nucleoTematico);
 
-        return resultado;
+        new ObraDAO().atualizar(obraAtualizada);
+
+        this.titulo = titulo;
+        this.autoria = autoria;
+        this.ano = ano;
+        this.tecnica = tecnica;
+        this.descricao = descricao;
+        this.categoria = categoria;
+        this.legenda = legenda;
     }
 
     public void verObra() {
@@ -136,24 +153,17 @@ public class Obra {
         System.out.println("Legenda: " + legenda);
     }
 
-    public void editarObra(String titulo, String autoria,
-            int ano, String tecnica, String descricao,
-            CategoriaObra categoria, String legenda) {
-
-        this.titulo = titulo;
-        this.autoria = autoria;
-        this.ano = ano;
-        this.tecnica = tecnica;
-        this.descricao = descricao;
-        this.categoria = categoria;
-        this.legenda = legenda;
-    }
-
     public boolean vincularNucleo(NucleoTematico nucleo) {
 
-        if (nucleo == null || this.nucleoTematico != null) {
+        if (nucleo == null || nucleo.getId() <= 0
+                || this.nucleoTematico != null) {
             return false;
         }
+
+        Obra obraAtualizada = recuperarDoBanco(this.id, this.titulo, this.autoria, this.ano, this.tecnica,
+                this.descricao, this.categoria, this.legenda, nucleo);
+
+        new ObraDAO().atualizar(obraAtualizada);
 
         this.nucleoTematico = nucleo;
 
@@ -166,6 +176,11 @@ public class Obra {
             return false;
         }
 
+        Obra obraAtualizada = recuperarDoBanco(this.id, this.titulo, this.autoria, this.ano, this.tecnica,
+                this.descricao, this.categoria, this.legenda, null);
+
+        new ObraDAO().atualizar(obraAtualizada);
+
         this.nucleoTematico = null;
 
         return true;
@@ -173,13 +188,22 @@ public class Obra {
 
     public void excluirObra() {
 
-        if (this.nucleoTematico != null) {
+        ObraDAO banco = new ObraDAO();
+
+        Obra obra = banco.buscarPorId(this.id);
+
+        if (obra == null) {
+            System.out.println("Obra não encontrada.");
+            return;
+        }
+
+        if (obra.getNucleoTematico() != null) {
             System.out.println(
                     "Não é possível excluir: a obra está vinculada a um núcleo.");
             return;
         }
 
-        obras.remove(this);
+        banco.excluir(this.id);
     }
 
 }
