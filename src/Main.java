@@ -1,6 +1,3 @@
-/**
- * Representa o ponto de partida do programa.
- */
 import banco.InicializadorBanco;
 import java.util.Scanner;
 import sistema.Sistema;
@@ -11,6 +8,7 @@ import sistema.menu.autenticacao.OpcaoLogin;
 import sistema.menu.item.OpcaoConsultarItem;
 import sistema.menu.item.OpcaoCriarItem;
 import sistema.menu.item.OpcaoExcluirItem;
+import sistema.menu.principal.OpcaoDeslogar;
 import sistema.menu.principal.OpcaoGerenciarItens;
 import sistema.menu.principal.OpcaoGerenciarUsuarios;
 import sistema.menu.usuario.OpcaoAtivarUsuario;
@@ -22,7 +20,6 @@ import sistema.menu.usuario.OpcaoDesativarUsuario;
 public class Main {
 
     public static void main(String[] args) {
-
         InicializadorBanco.inicializar();
 
         Scanner leitor = new Scanner(System.in);
@@ -46,6 +43,7 @@ public class Main {
                 new Opcao[] {
                     new OpcaoGerenciarUsuarios(sistema),
                     new OpcaoGerenciarItens(sistema),
+                    new OpcaoDeslogar(sistema),
                 },
                 null
             )

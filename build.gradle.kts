@@ -15,11 +15,13 @@ java {
 sourceSets {
     getByName("main") {
         java.setSrcDirs(listOf("src"))
+        resources.setSrcDirs(listOf("resources"))
     }
 }
 
 tasks.named<JavaExec>("run") {
     standardInput = System.`in`
+    systemProperty("stdout.encoding", "UTF-8")
 }
 
 application {
@@ -31,18 +33,4 @@ dependencies {
     implementation("commons-validator:commons-validator:1.9.0")
     implementation("io.github.cdimascio:dotenv-java:3.0.0")
     implementation("org.postgresql:postgresql:42.7.4")
-}
-
-sourceSets {
-    main {
-        resources {
-            srcDir("src/resources")
-        }
-    }
-}
-
-tasks.named<JavaExec>("run") {
-    standardInput = System.`in`
-    systemProperty("stdout.encoding", "UTF-8")
-    systemProperty("file.encoding", "UTF-8")
 }
