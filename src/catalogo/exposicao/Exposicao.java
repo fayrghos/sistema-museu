@@ -62,14 +62,17 @@ public class Exposicao {
 
     public static List<Exposicao> listarExposicoes(){
         // retorna todas as exposições do banco de dados
+        return null;
     }
 
     public static List<Exposicao> buscarPorTitulo(String titulo){
         // retorna todas as exposições com o título x no banco de dados
+        return null;
     }
 
     public static List<Exposicao> buscarPorTema(String tema){
         // retorna todas as exposições com o tema x no banco de dados
+        return null;
     }
 
     public void iniciarDesenvolvimento(){

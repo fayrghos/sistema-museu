@@ -1,5 +1,6 @@
 package sistema;
 
+import autenticacao.Usuario;
 import java.util.HashMap;
 import java.util.Scanner;
 import sistema.menu.IdMenu;
@@ -8,12 +9,24 @@ import sistema.menu.Menu;
 public final class Sistema {
 
     private Scanner leitor;
+    private Usuario usuarioLogado;
 
     private Menu menuAtivo;
     private HashMap<IdMenu, Menu> mapaMenus = new HashMap<>();
 
     public Sistema(Scanner leitor) {
         this.leitor = leitor;
+    }
+
+    public void aguardarConfirmacao() {
+        System.out.println();
+        System.out.print(">> Pressione ENTER para continuar...");
+
+        if (leitor.hasNextLine()) {
+            leitor.nextLine();
+        }
+
+        System.out.println();
     }
 
     public void alterarMenu(IdMenu idMenu) {
@@ -28,8 +41,18 @@ public final class Sistema {
         this.menuAtivo = null;
     }
 
+    public void deslogarUsuario() {
+        alterarMenu(IdMenu.AUTENTICACAO);
+        this.usuarioLogado = null;
+    }
+
     public Scanner leitor() {
         return this.leitor;
+    }
+
+    public void logarUsuario(Usuario novoUsuario) {
+        alterarMenu(IdMenu.PRINCIPAL);
+        this.usuarioLogado = novoUsuario;
     }
 
     public Menu menuAtivo() {
@@ -48,9 +71,7 @@ public final class Sistema {
         return menuAtivo != null;
     }
 
-    public void aguardarConfirmacao() {
-        leitor.nextLine();
-        System.out.println("Pressione ENTER para continuar...");
-        leitor.nextLine();
+    public Usuario usuario() {
+        return this.usuarioLogado;
     }
 }

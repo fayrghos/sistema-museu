@@ -6,7 +6,7 @@ import sistema.menu.Opcao;
 public final class OpcaoConsultarItem extends Opcao {
 
     public OpcaoConsultarItem(Sistema sistema) {
-        super(sistema, "Consultar Item", true, false);
+        super(sistema, "Consultar Item", false, true);
     }
 
     @Override

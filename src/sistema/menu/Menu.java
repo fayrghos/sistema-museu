@@ -32,7 +32,35 @@ public class Menu {
         int escolha = Entrada.lerOpcao(sistema.leitor(), opcoes.length);
 
         if (escolha != 0) {
-            opcoes[escolha - 1].interagir();
+            Opcao opcaoEscolhida = opcoes[escolha - 1];
+
+            if (opcaoEscolhida.usavelDeslogado) {
+                opcaoEscolhida.interagir();
+                return;
+            }
+
+            if (
+                opcaoEscolhida.requerAdmin &&
+                !sistema.usuario().getAdministrador()
+            ) {
+                System.out.println(
+                    "Você precisa ser um administrador para acessar essa opção!"
+                );
+                sistema.aguardarConfirmacao();
+                return;
+            }
+
+            if (
+                opcaoEscolhida.requerCurador && !sistema.usuario().getCurador()
+            ) {
+                System.out.println(
+                    "Você precisa ser um curador para acessar essa opção!"
+                );
+                sistema.aguardarConfirmacao();
+                return;
+            }
+
+            opcaoEscolhida.interagir();
             return;
         }
         saida.interagir();

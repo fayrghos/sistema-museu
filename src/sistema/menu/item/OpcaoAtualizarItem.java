@@ -6,7 +6,7 @@ import sistema.menu.Opcao;
 public final class OpcaoAtualizarItem extends Opcao {
 
     public OpcaoAtualizarItem(Sistema sistema) {
-        super(sistema, "Atualizar Item", true, false);
+        super(sistema, "Atualizar Item", false, true);
     }
 
     @Override
