@@ -4,6 +4,27 @@ import java.util.Scanner;
 
 public class Entrada {
 
+    public static boolean lerBooleano(String rotulo, Scanner leitor) {
+        for (;;) {
+            try {
+                System.out.printf("%s? [S/N]: ", rotulo);
+                String entrada = leitor.nextLine().trim();
+
+                if (entrada.equalsIgnoreCase("s")) {
+                    return true;
+                }
+
+                if (entrada.equalsIgnoreCase("n")) {
+                    return false;
+                }
+
+                throw new RuntimeException("Insira apenas 'S' ou 'N'");
+            } catch (RuntimeException err) {
+                System.err.println(err.getMessage());
+            }
+        }
+    }
+
     public static String lerPalavra(String rotulo, Scanner leitor) {
         for (;;) {
             try {
@@ -22,7 +43,22 @@ public class Entrada {
 
                 return entrada;
             } catch (RuntimeException err) {
-                System.out.println(err.getMessage());
+                System.err.println(err.getMessage());
+            }
+        }
+    }
+
+    public static int lerInteiro(String rotulo, Scanner leitor) {
+        for (;;) {
+            try {
+                System.out.printf("%s: ", rotulo);
+                String entrada = leitor.nextLine().trim();
+
+                return Integer.parseInt(entrada);
+            } catch (NumberFormatException err) {
+                System.out.println("Apenas números inteiros são permitidos");
+            } catch (RuntimeException err) {
+                System.err.println(err.getMessage());
             }
         }
     }
@@ -47,7 +83,7 @@ public class Entrada {
             } catch (NumberFormatException err) {
                 System.out.println("Apenas números inteiros são permitidos");
             } catch (RuntimeException err) {
-                System.out.println(err.getMessage());
+                System.err.println(err.getMessage());
             }
         }
     }
