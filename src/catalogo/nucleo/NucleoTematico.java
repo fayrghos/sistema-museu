@@ -129,11 +129,16 @@ public class NucleoTematico {
         NucleoTematicoDAO banco = new NucleoTematicoDAO();
 
         if (banco.possuiObras(this.id)) {
-            System.out.println("Não é possível excluir: o núcleo possui obras vinculadas.");
+            System.out.println(
+                    "Não é possível excluir: o núcleo possui obras vinculadas.");
             return;
         }
 
-        banco.excluir(this.id);
-    }
+        try {
+            banco.excluir(this.id);
 
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

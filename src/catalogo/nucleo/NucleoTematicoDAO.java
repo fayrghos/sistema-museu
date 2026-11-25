@@ -84,9 +84,23 @@ public class NucleoTematicoDAO
     }
 
     public List<NucleoTematico> buscarPorTitulo(String titulo) {
+
+        if (titulo == null || titulo.isBlank()) {
+            return List.of();
+        }
+
+        String termo = titulo.trim()
+                .replace("!", "!!")
+                .replace("%", "!%")
+                .replace("_", "!_");
+
         return consultar(
-                "SELECT * FROM NUCLEO_TEMATICO WHERE titulo ILIKE ? ORDER BY titulo",
-                "%" + titulo + "%");
+                """
+                        SELECT * FROM NUCLEO_TEMATICO
+                        WHERE titulo ILIKE ? ESCAPE '!'
+                        ORDER BY titulo
+                        """,
+                "%" + termo + "%");
     }
 
     public boolean possuiObras(int idNucleo) {

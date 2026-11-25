@@ -13,31 +13,46 @@ public abstract class BancoGenericoDAO<T> {
 
     // Contrato: o que cada entidade precisa informar
     public abstract String tabela();
+
     public abstract List<String> colunasInsercao();
+
     public abstract void preencherStatement(PreparedStatement ps, T obj) throws SQLException;
+
     public abstract T mapear(ResultSet rs) throws SQLException;
+
     public abstract void definirId(T obj, int id);
 
     // INSERT universal
     public void inserir(T obj) {
         List<String> colunas = colunasInsercao();
+
         String sql = "INSERT INTO " + tabela()
-                   + " (" + String.join(", ", colunas) + ") VALUES ("
-                   + String.join(", ", Collections.nCopies(colunas.size(), "?")) + ")";
+                + " (" + String.join(", ", colunas) + ") VALUES ("
+                + String.join(", ", Collections.nCopies(colunas.size(), "?")) + ")";
 
-        try (Connection conn = ConexaoBD.getConexao();
-             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
+        try (
+                Connection conn = ConexaoBD.getConexao();
+                PreparedStatement ps = conn.prepareStatement(
+                        sql, Statement.RETURN_GENERATED_KEYS)) {
             preencherStatement(ps, obj);
-            ps.executeUpdate();
+
+            if (ps.executeUpdate() != 1) {
+                throw new IllegalStateException(
+                        "Não foi possível inserir o registro em " + tabela());
+            }
 
             try (ResultSet chaves = ps.getGeneratedKeys()) {
-                if (chaves.next()) {
-                    definirId(obj, chaves.getInt(1));
+                if (!chaves.next()) {
+                    throw new IllegalStateException(
+                            "Não foi possível recuperar o ID em " + tabela());
                 }
+
+                definirId(obj, chaves.getInt(1));
             }
+
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao inserir em " + tabela() + ": " + e.getMessage(), e);
+            throw new RuntimeException(
+                    "Erro ao inserir em " + tabela() + ": " + e.getMessage(), e);
         }
     }
 
@@ -58,16 +73,19 @@ public abstract class BancoGenericoDAO<T> {
                 + " WHERE " + colunaId() + " = ?";
 
         try (Connection conn = ConexaoBD.getConexao();
-            PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             preencherStatement(ps, obj);
             ps.setInt(colunas.size() + 1, id);
-            ps.executeUpdate();
+            int linhasAfetadas = ps.executeUpdate();
+
+            if (linhasAfetadas != 1) {
+                throw new IllegalStateException("Registro não encontrado para atualização em " + tabela());
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(
-                "Erro ao atualizar em " + tabela() + ": " + e.getMessage(), e
-            );
+                    "Erro ao atualizar em " + tabela() + ": " + e.getMessage(), e);
         }
     }
 
@@ -85,7 +103,7 @@ public abstract class BancoGenericoDAO<T> {
         List<T> lista = new ArrayList<>();
 
         try (Connection conn = ConexaoBD.getConexao();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             for (int i = 0; i < parametros.length; i++) {
                 ps.setObject(i + 1, parametros[i]);
@@ -102,24 +120,27 @@ public abstract class BancoGenericoDAO<T> {
     }
 
     public List<String> colunasAtualizacao() {
-    return colunasInsercao();
+        return colunasInsercao();
     }
 
     public void excluir(int id) {
-    String sql = "DELETE FROM " + tabela()
-               + " WHERE " + colunaId() + " = ?";
+        String sql = "DELETE FROM " + tabela()
+                + " WHERE " + colunaId() + " = ?";
 
-    try (Connection conn = ConexaoBD.getConexao();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = ConexaoBD.getConexao();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        ps.setInt(1, id);
-        ps.executeUpdate();
+            ps.setInt(1, id);
+            int linhasAfetadas = ps.executeUpdate();
 
-    } catch (SQLException e) {
-        throw new RuntimeException(
-            "Erro ao excluir em " + tabela() + ": " + e.getMessage(), e
-        );
+            if (linhasAfetadas != 1) {
+                throw new IllegalStateException("Registro não encontrado para exclusão em " + tabela());
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(
+                    "Erro ao excluir em " + tabela() + ": " + e.getMessage(), e);
+        }
     }
-}
 
 }
