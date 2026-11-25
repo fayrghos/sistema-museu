@@ -12,7 +12,7 @@ public class ConexaoBD {
             .ignoreIfMissing()
             .load();
 
-    private static final String URL = ENV.get("DB_URL", "jdbc:postgresql://localhost:5433/museu");
+    private static final String URL = ENV.get("DB_URL", "jdbc:postgresql://localhost:5432/museu");
     private static final String USUARIO = ENV.get("POSTGRES_USER", "postgres");
     private static final String SENHA = obrigatoria("POSTGRES_PASSWORD");
 

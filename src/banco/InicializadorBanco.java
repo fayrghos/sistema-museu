@@ -19,7 +19,7 @@ public class InicializadorBanco {
                 criarTabelas(conn);
                 criarAdminPadrao(conn);
                 conn.commit();
-                System.out.println("[BD] Banco inicializado com sucesso.");
+                System.out.println("O banco de dados foi inicializado com sucesso.");
             } catch (Exception e) {
                 conn.rollback();
                 throw e;
