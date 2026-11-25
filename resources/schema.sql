@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS EXPOSICAO (
 
 CREATE TABLE IF NOT EXISTS NUCLEO_TEMATICO (
     id_nucleo_tematico INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    id_exposicao INTEGER,
+    id_exposicao INTEGER NOT NULL,
     titulo VARCHAR(255),
     descricao TEXT,
     texto_contextualizacao TEXT,

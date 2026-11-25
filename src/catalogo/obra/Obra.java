@@ -155,19 +155,19 @@ public class Obra {
 
     public boolean vincularNucleo(NucleoTematico nucleo) {
 
-        if (nucleo == null || nucleo.getId() <= 0
-                || this.nucleoTematico != null) {
+        if (nucleo == null || nucleo.getId() <= 0) {
             return false;
         }
 
-        Obra obraAtualizada = recuperarDoBanco(this.id, this.titulo, this.autoria, this.ano, this.tecnica,
-                this.descricao, this.categoria, this.legenda, nucleo);
+        boolean vinculado = new ObraDAO().vincularNucleo(
+                this.id,
+                nucleo.getId());
 
-        new ObraDAO().atualizar(obraAtualizada);
+        if (vinculado) {
+            this.nucleoTematico = nucleo;
+        }
 
-        this.nucleoTematico = nucleo;
-
-        return true;
+        return vinculado;
     }
 
     public boolean desvincularNucleo() {
@@ -176,34 +176,24 @@ public class Obra {
             return false;
         }
 
-        Obra obraAtualizada = recuperarDoBanco(this.id, this.titulo, this.autoria, this.ano, this.tecnica,
-                this.descricao, this.categoria, this.legenda, null);
+        boolean desvinculado = new ObraDAO().desvincularNucleo(
+                this.id,
+                this.nucleoTematico.getId());
 
-        new ObraDAO().atualizar(obraAtualizada);
+        if (desvinculado) {
+            this.nucleoTematico = null;
+        }
 
-        this.nucleoTematico = null;
-
-        return true;
+        return desvinculado;
     }
 
     public void excluirObra() {
+        try {
+            new ObraDAO().excluir(this.id);
 
-        ObraDAO banco = new ObraDAO();
-
-        Obra obra = banco.buscarPorId(this.id);
-
-        if (obra == null) {
-            System.out.println("Obra não encontrada.");
-            return;
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
         }
-
-        if (obra.getNucleoTematico() != null) {
-            System.out.println(
-                    "Não é possível excluir: a obra está vinculada a um núcleo.");
-            return;
-        }
-
-        banco.excluir(this.id);
     }
 
 }
