@@ -125,27 +125,34 @@ public class Entrada {
         int quantOpcoes,
         boolean permitirZero
     ) {
+        int menorOpcao = permitirZero ? 0 : 1;
+
         for (;;) {
+            System.out.println();
+            System.out.print("Escolha: ");
+
+            int escolha;
             try {
-                System.out.println();
-                System.out.print("Escolha: ");
                 String entrada = leitor.nextLine().trim();
-                int escolha = Integer.parseInt(entrada);
-
                 System.out.println();
-
-                if (escolha < (permitirZero ? 0 : 1) || escolha > quantOpcoes) {
-                    throw new RuntimeException(
-                        "Apenas números inteiros são permitidos"
-                    );
-                }
-
-                return escolha;
+                escolha = Integer.parseInt(entrada);
             } catch (NumberFormatException err) {
-                System.out.println("Apenas números inteiros são permitidos");
-            } catch (RuntimeException err) {
-                System.err.println(err.getMessage());
+                System.out.println(
+                    "Apenas números inteiros são permitidos."
+                );
+                continue;
             }
+
+            if (escolha < menorOpcao || escolha > quantOpcoes) {
+                System.out.printf(
+                    "Opção inválida. Escolha um número entre %d e %d.\n",
+                    menorOpcao,
+                    quantOpcoes
+                );
+                continue;
+            }
+
+            return escolha;
         }
     }
 }
