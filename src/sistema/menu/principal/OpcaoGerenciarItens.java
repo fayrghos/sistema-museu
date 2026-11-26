@@ -7,7 +7,7 @@ import sistema.menu.Opcao;
 public final class OpcaoGerenciarItens extends Opcao {
 
     public OpcaoGerenciarItens(Sistema sistema) {
-        super(sistema, "Gerenciar Itens", false, true);
+        super(sistema, "Gerenciar Itens");
     }
 
     @Override

@@ -36,13 +36,13 @@ public final class OpcaoAtualizarItem extends Opcao {
                 }
 
                 obra.editarObra(
-                    Entrada.lerPalavra("Insira o nome", sistema.leitor()),
-                    Entrada.lerPalavra("Insira a autoria", sistema.leitor()),
+                    Entrada.lerLinha("Insira o nome", sistema.leitor()),
+                    Entrada.lerLinha("Insira a autoria", sistema.leitor()),
                     Entrada.lerInteiro("Insira o ano", sistema.leitor()),
-                    Entrada.lerPalavra("Insira a técnica", sistema.leitor()),
-                    Entrada.lerPalavra("Insira a descrição", sistema.leitor()),
+                    Entrada.lerLinha("Insira a técnica", sistema.leitor()),
+                    Entrada.lerLinha("Insira a descrição", sistema.leitor()),
                     Entrada.lerCategoria(sistema.leitor()),
-                    Entrada.lerPalavra("Insira a legenda", sistema.leitor())
+                    Entrada.lerLinha("Insira a legenda", sistema.leitor())
                 );
                 System.out.printf(
                     "Obra de ID %d atualizada com sucesso.\n",
@@ -67,11 +67,11 @@ public final class OpcaoAtualizarItem extends Opcao {
                 }
 
                 exposicao.editarExposicao(
-                    Entrada.lerPalavra("Insira o título", sistema.leitor()),
-                    Entrada.lerPalavra("Insira o tema", sistema.leitor()),
-                    Entrada.lerPalavra("Insira o conceito", sistema.leitor()),
-                    Entrada.lerPalavra("Insira os objetivos", sistema.leitor()),
-                    Entrada.lerPalavra("Insira a descrição", sistema.leitor()),
+                    Entrada.lerLinha("Insira o título", sistema.leitor()),
+                    Entrada.lerLinha("Insira o tema", sistema.leitor()),
+                    Entrada.lerLinha("Insira o conceito", sistema.leitor()),
+                    Entrada.lerLinha("Insira os objetivos", sistema.leitor()),
+                    Entrada.lerLinha("Insira a descrição", sistema.leitor()),
                     Entrada.lerData(
                         "Insira a data inicial prevista",
                         sistema.leitor()
@@ -80,7 +80,7 @@ public final class OpcaoAtualizarItem extends Opcao {
                         "Insira a data final prevista",
                         sistema.leitor()
                     ),
-                    Entrada.lerPalavra(
+                    Entrada.lerLinha(
                         "Insira o texto de apresentação",
                         sistema.leitor()
                     )
@@ -108,9 +108,9 @@ public final class OpcaoAtualizarItem extends Opcao {
                 }
 
                 nucleo.editarNucleo(
-                    Entrada.lerPalavra("Insira o título", sistema.leitor()),
-                    Entrada.lerPalavra("Insira a descrição", sistema.leitor()),
-                    Entrada.lerPalavra(
+                    Entrada.lerLinha("Insira o título", sistema.leitor()),
+                    Entrada.lerLinha("Insira a descrição", sistema.leitor()),
+                    Entrada.lerLinha(
                         "Insira o texto de contextualização",
                         sistema.leitor()
                     ),
