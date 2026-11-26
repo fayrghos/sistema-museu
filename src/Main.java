@@ -5,8 +5,9 @@ import sistema.menu.IdMenu;
 import sistema.menu.Menu;
 import sistema.menu.Opcao;
 import sistema.menu.autenticacao.OpcaoLogin;
+import sistema.menu.item.OpcaoAtualizarItem;
+import sistema.menu.item.OpcaoCadastrarItem;
 import sistema.menu.item.OpcaoConsultarItem;
-import sistema.menu.item.OpcaoCriarItem;
 import sistema.menu.item.OpcaoExcluirItem;
 import sistema.menu.principal.OpcaoDeslogar;
 import sistema.menu.principal.OpcaoGerenciarItens;
@@ -74,7 +75,8 @@ public class Main {
                 "Gerenciar Itens",
                 new Opcao[] {
                     new OpcaoConsultarItem(sistema),
-                    new OpcaoCriarItem(sistema),
+                    new OpcaoCadastrarItem(sistema),
+                    new OpcaoAtualizarItem(sistema),
                     new OpcaoExcluirItem(sistema),
                 },
                 IdMenu.PRINCIPAL

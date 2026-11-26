@@ -1,8 +1,53 @@
 package utilidades;
 
+import catalogo.obra.CategoriaObra;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+import sistema.menu.item.TipoItem;
 
 public class Entrada {
+
+    public static TipoItem lerItem(Scanner leitor) {
+        System.out.println("-- Seleção de item");
+        System.out.println("  [1] Obra");
+        System.out.println("  [2] Núcleo");
+        System.out.println("  [3] Exposição");
+
+        int opcao = lerOpcao(leitor, 3, false);
+
+        return switch (opcao) {
+            case 1 -> TipoItem.OBRA;
+            case 2 -> TipoItem.NUCLEO;
+            case 3 -> TipoItem.EXPOSICAO;
+            default -> null;
+        };
+    }
+
+    public static CategoriaObra lerCategoria(Scanner leitor) {
+        System.out.println("-- Seleção de categoria");
+        System.out.println("  [1] Pintura");
+        System.out.println("  [2] Escultura");
+        System.out.println("  [3] Fotografia");
+        System.out.println("  [4] Instalação");
+        System.out.println("  [5] Documento");
+        System.out.println("  [6] Outra");
+
+        for (;;) {
+            int opcao = lerOpcao(leitor, 6, false);
+
+            return switch (opcao) {
+                case 1 -> CategoriaObra.PINTURA;
+                case 2 -> CategoriaObra.ESCULTURA;
+                case 3 -> CategoriaObra.FOTOGRAFIA;
+                case 4 -> CategoriaObra.INSTALACAO;
+                case 5 -> CategoriaObra.DOCUMENTO;
+                case 6 -> CategoriaObra.OUTRA;
+                default -> null;
+            };
+        }
+    }
 
     public static boolean lerBooleano(String rotulo, Scanner leitor) {
         for (;;) {
@@ -63,7 +108,23 @@ public class Entrada {
         }
     }
 
-    public static int lerOpcao(Scanner leitor, int quantOpcoes) {
+    public static Date lerData(String rotulo, Scanner leitor) {
+        for (;;) {
+            try {
+                System.out.printf("%s (AAAA-MM-DD): ", rotulo);
+                String entrada = leitor.nextLine().trim();
+                return Date.valueOf(LocalDate.parse(entrada));
+            } catch (DateTimeParseException err) {
+                System.out.println("Data inválida. Use o formato AAAA-MM-DD.");
+            }
+        }
+    }
+
+    public static int lerOpcao(
+        Scanner leitor,
+        int quantOpcoes,
+        boolean permitirZero
+    ) {
         for (;;) {
             try {
                 System.out.println();
@@ -73,7 +134,7 @@ public class Entrada {
 
                 System.out.println();
 
-                if (escolha < 0 || escolha > quantOpcoes) {
+                if (escolha < (permitirZero ? 0 : 1) || escolha > quantOpcoes) {
                     throw new RuntimeException(
                         "Apenas números inteiros são permitidos"
                     );

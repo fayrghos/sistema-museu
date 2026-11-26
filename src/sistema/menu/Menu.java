@@ -29,7 +29,7 @@ public class Menu {
     }
 
     public void processar() {
-        int escolha = Entrada.lerOpcao(sistema.leitor(), opcoes.length);
+        int escolha = Entrada.lerOpcao(sistema.leitor(), opcoes.length, true);
 
         if (escolha != 0) {
             Opcao opcaoEscolhida = opcoes[escolha - 1];

@@ -127,4 +127,29 @@ public class NucleoTematicoDAO
                     "Erro ao verificar obras vinculadas.", e);
         }
     }
+
+    public boolean possuiNucleos(int idExposicao) {
+
+        String sql = """
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM NUCLEO_TEMATICO
+                    WHERE id_exposicao = ?
+                )
+                """;
+
+        try (
+                Connection conn = ConexaoBD.getConexao();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idExposicao);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() && rs.getBoolean(1);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(
+                    "Erro ao verificar núcleos vinculados à exposição.", e);
+        }
+    }
 }

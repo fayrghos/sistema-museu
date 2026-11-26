@@ -58,9 +58,17 @@ public class Exposicao {
         return exposicao;
     }
 
-    public Exposicao verExposicao() {
-        ExposicaoDAO dao = new ExposicaoDAO();
-        return dao.buscarPorId(id);
+    public void verExposicao() {
+        System.out.printf("ID: %d%n", id);
+        System.out.printf("Título: %s%n", titulo);
+        System.out.printf("Tema: %s%n", tema);
+        System.out.printf("Conceito: %s%n", conceito);
+        System.out.printf("Objetivos: %s%n", objetivos);
+        System.out.printf("Descrição: %s%n", descricao);
+        System.out.printf("Data inicial prevista: %s%n", periodoInicioPrevisto);
+        System.out.printf("Data final prevista: %s%n", periodoFimPrevisto);
+        System.out.printf("Texto de apresentação: %s%n", textoApresentacao);
+        System.out.printf("Status: %s%n", status);
     }
 
     public void editarExposicao(String titulo, String tema, String conceito, String objetivos, String descricao, Date periodoInicioPrevisto, Date periodoFimPrevisto, String textoApresentacao){

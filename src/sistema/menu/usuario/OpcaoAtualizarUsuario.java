@@ -38,6 +38,15 @@ public final class OpcaoAtualizarUsuario extends Opcao {
             System.out.println(err.getMessage());
         }
 
+        try {
+            usuario.alterarPermissoes(
+                Entrada.lerBooleano("Deve ser administrador", sistema.leitor()),
+                Entrada.lerBooleano("Deve ser curador", sistema.leitor())
+            );
+        } catch (IllegalArgumentException err) {
+            System.out.println(err.getMessage());
+        }
+
         sistema.aguardarConfirmacao();
     }
 }
