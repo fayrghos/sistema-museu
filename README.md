@@ -1,3 +1,7 @@
+# Sistema de Gerenciamento de Museu
+
+Um sistema escrito em Java que serve como requisito para a nota da terceira unidade da disciplina de Programação Orientada a Objetos.
+
 ## Rodando
 
 O projeto utiliza um [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) embutido para o build, bastando apenas ter o [OpenJDK](https://openjdk.org/) 25+ instalado em sua máquina.
