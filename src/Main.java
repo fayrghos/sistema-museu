@@ -92,6 +92,7 @@ public class Main {
             sistema.menuAtivo().processar();
         }
 
+        System.out.println("Obrigado por utilizar!");
         leitor.close();
     }
 }

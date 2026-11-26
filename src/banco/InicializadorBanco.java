@@ -1,7 +1,5 @@
 package banco;
 
-import utilidades.hash.SenhaHash;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -9,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import utilidades.SenhaHash;
 
 public class InicializadorBanco {
 
@@ -19,7 +18,7 @@ public class InicializadorBanco {
             );
             System.exit(1);
         }
-        
+
         try (Connection conn = ConexaoBD.getConexao()) {
             conn.setAutoCommit(false);
             try {
@@ -47,31 +46,41 @@ public class InicializadorBanco {
 
             System.exit(1);
         } catch (Exception err) {
-            System.err.println("Um erro desconhecido ocorreu no banco de dados.");
+            System.err.println(
+                "Um erro desconhecido ocorreu no banco de dados."
+            );
             System.exit(1);
         }
     }
 
-    private static void criarTabelas(Connection conn) throws SQLException, IOException {
+    private static void criarTabelas(Connection conn)
+        throws SQLException, IOException
+    {
         String sql;
-        try (InputStream in = InicializadorBanco.class.getResourceAsStream("/schema.sql")) {
+        try (
+            InputStream in = InicializadorBanco.class.getResourceAsStream(
+                "/schema.sql"
+            )
+        ) {
             if (in == null) {
-                throw new IOException("schema.sql não encontrado em src/main/resources");
+                throw new IOException(
+                    "schema.sql não encontrado em src/main/resources"
+                );
             }
             sql = new String(in.readAllBytes(), StandardCharsets.UTF_8);
         }
         try (Statement st = conn.createStatement()) {
-            st.execute(sql); // o driver do Postgres aceita vários comandos separados por ;
+            st.execute(sql);
         }
     }
 
     private static void criarAdminPadrao(Connection conn) throws SQLException {
         String sql = """
-                INSERT INTO USUARIO (email, nome, senha, ativo, administrador, curador)
-                SELECT ?, ?, ?, TRUE, TRUE, FALSE
-                WHERE NOT EXISTS (SELECT 1 FROM USUARIO WHERE email = ?)
-                ON CONFLICT (email) DO NOTHING
-                """;
+        INSERT INTO USUARIO (email, nome, senha, ativo, administrador, curador)
+        SELECT ?, ?, ?, TRUE, TRUE, FALSE
+        WHERE NOT EXISTS (SELECT 1 FROM USUARIO WHERE email = ?)
+        ON CONFLICT (email) DO NOTHING
+        """;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "admin@admin.com");
             ps.setString(2, "Administrador");

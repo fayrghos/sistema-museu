@@ -1,8 +1,7 @@
 package catalogo.nucleo;
 
-import java.util.List;
-
 import catalogo.exposicao.Exposicao;
+import java.util.List;
 
 public class NucleoTematico {
 
@@ -50,38 +49,59 @@ public class NucleoTematico {
         this.id = id;
     }
 
-    private NucleoTematico(int id, Exposicao exposicao, String titulo, String descricao, String textoContextualizacao,
-            int ordem) {
-
+    private NucleoTematico(
+        int id,
+        Exposicao exposicao,
+        String titulo,
+        String descricao,
+        String textoContextualizacao,
+        int ordem
+    ) {
         this.id = id;
         this.exposicao = exposicao;
         this.titulo = titulo;
         this.descricao = descricao;
         this.textoContextualizacao = textoContextualizacao;
         this.ordem = ordem;
-
     }
 
-    public static NucleoTematico recuperarDoBanco(int id, Exposicao exposicao, String titulo, String descricao,
-            String textoContextualizacao, int ordem) {
-
+    public static NucleoTematico recuperarDoBanco(
+        int id,
+        Exposicao exposicao,
+        String titulo,
+        String descricao,
+        String textoContextualizacao,
+        int ordem
+    ) {
         return new NucleoTematico(
-                id,
-                exposicao,
-                titulo,
-                descricao,
-                textoContextualizacao,
-                ordem);
+            id,
+            exposicao,
+            titulo,
+            descricao,
+            textoContextualizacao,
+            ordem
+        );
     }
 
-    public static NucleoTematico criarNucleo(Exposicao exposicao, String titulo, String descricao,
-            String textoContextualizacao, int ordem) {
-
+    public static NucleoTematico criarNucleo(
+        Exposicao exposicao,
+        String titulo,
+        String descricao,
+        String textoContextualizacao,
+        int ordem
+    ) {
         if (exposicao == null || exposicao.getId() <= 0) {
             return null;
         }
 
-        NucleoTematico novoNucleo = new NucleoTematico(0, exposicao, titulo, descricao, textoContextualizacao, ordem);
+        NucleoTematico novoNucleo = new NucleoTematico(
+            0,
+            exposicao,
+            titulo,
+            descricao,
+            textoContextualizacao,
+            ordem
+        );
 
         new NucleoTematicoDAO().inserir(novoNucleo);
 
@@ -93,17 +113,14 @@ public class NucleoTematico {
     }
 
     public static List<NucleoTematico> buscarPorTitulo(String titulo) {
-
         if (titulo == null || titulo.isBlank()) {
             return List.of();
         }
 
-        return new NucleoTematicoDAO()
-                .buscarPorTitulo(titulo.trim());
+        return new NucleoTematicoDAO().buscarPorTitulo(titulo.trim());
     }
 
     public void verNucleo() {
-
         System.out.println("ID: " + id);
         System.out.println("Título: " + titulo);
         System.out.println("Descrição: " + descricao);
@@ -111,10 +128,20 @@ public class NucleoTematico {
         System.out.println("Ordem: " + ordem);
     }
 
-    public void editarNucleo(String titulo, String descricao, String textoContextualizacao, int ordem) {
-
-        NucleoTematico nucleoAtualizado = recuperarDoBanco(this.id, this.exposicao, titulo, descricao,
-                textoContextualizacao, ordem);
+    public void editarNucleo(
+        String titulo,
+        String descricao,
+        String textoContextualizacao,
+        int ordem
+    ) {
+        NucleoTematico nucleoAtualizado = recuperarDoBanco(
+            this.id,
+            this.exposicao,
+            titulo,
+            descricao,
+            textoContextualizacao,
+            ordem
+        );
 
         new NucleoTematicoDAO().atualizar(nucleoAtualizado);
 
@@ -125,12 +152,12 @@ public class NucleoTematico {
     }
 
     public void excluirNucleo() {
-
         NucleoTematicoDAO banco = new NucleoTematicoDAO();
 
         if (banco.possuiObras(this.id)) {
             System.out.println(
-                    "Não é possível excluir: o núcleo possui obras vinculadas.");
+                "Não é possível excluir: o núcleo possui obras vinculadas."
+            );
             return;
         }
 

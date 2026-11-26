@@ -34,10 +34,7 @@ public final class OpcaoExcluirItem extends Opcao {
                     return;
                 }
 
-                System.out.printf(
-                    "Excluindo obra de ID %d.\n",
-                    obra.getId()
-                );
+                System.out.printf("Excluindo obra de ID %d.\n", obra.getId());
                 obra.excluirObra();
             }
             case EXPOSICAO -> {

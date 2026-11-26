@@ -6,5 +6,5 @@ public enum CategoriaObra {
     FOTOGRAFIA,
     INSTALACAO,
     DOCUMENTO,
-    OUTRA
+    OUTRA,
 }

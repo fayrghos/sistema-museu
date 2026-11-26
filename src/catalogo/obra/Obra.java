@@ -1,10 +1,10 @@
 package catalogo.obra;
 
+import catalogo.nucleo.NucleoTematico;
 import java.util.List;
 
-import catalogo.nucleo.NucleoTematico;
-
 public class Obra {
+
     private int id;
     private String titulo;
     private String autoria;
@@ -16,8 +16,16 @@ public class Obra {
 
     private NucleoTematico nucleoTematico;
 
-    private Obra(int id, String titulo, String autoria, int ano, String tecnica, String descricao,
-            CategoriaObra categoria, String legenda) {
+    private Obra(
+        int id,
+        String titulo,
+        String autoria,
+        int ano,
+        String tecnica,
+        String descricao,
+        CategoriaObra categoria,
+        String legenda
+    ) {
         this.id = id;
         this.titulo = titulo;
         this.autoria = autoria;
@@ -76,27 +84,52 @@ public class Obra {
         return nucleoTematico;
     }
 
-    public static Obra recuperarDoBanco(int id, String titulo, String autoria, int ano, String tecnica,
-            String descricao, CategoriaObra categoria, String legenda, NucleoTematico nucleoTematico) {
-        Obra obra = new Obra(id, titulo, autoria, ano, tecnica, descricao, categoria, legenda);
+    public static Obra recuperarDoBanco(
+        int id,
+        String titulo,
+        String autoria,
+        int ano,
+        String tecnica,
+        String descricao,
+        CategoriaObra categoria,
+        String legenda,
+        NucleoTematico nucleoTematico
+    ) {
+        Obra obra = new Obra(
+            id,
+            titulo,
+            autoria,
+            ano,
+            tecnica,
+            descricao,
+            categoria,
+            legenda
+        );
 
         obra.nucleoTematico = nucleoTematico;
 
         return obra;
     }
 
-    public static Obra criarObra(String titulo, String autoria, int ano, String tecnica, String descricao,
-            CategoriaObra categoria, String legenda) {
-
+    public static Obra criarObra(
+        String titulo,
+        String autoria,
+        int ano,
+        String tecnica,
+        String descricao,
+        CategoriaObra categoria,
+        String legenda
+    ) {
         Obra novaObra = new Obra(
-                0,
-                titulo,
-                autoria,
-                ano,
-                tecnica,
-                descricao,
-                categoria,
-                legenda);
+            0,
+            titulo,
+            autoria,
+            ano,
+            tecnica,
+            descricao,
+            categoria,
+            legenda
+        );
 
         new ObraDAO().inserir(novaObra);
 
@@ -108,7 +141,6 @@ public class Obra {
     }
 
     public static List<Obra> buscarPorTitulo(String titulo) {
-
         if (titulo == null || titulo.isBlank()) {
             return List.of();
         }
@@ -117,7 +149,6 @@ public class Obra {
     }
 
     public static List<Obra> buscarPorAutoria(String autoria) {
-
         if (autoria == null || autoria.isBlank()) {
             return List.of();
         }
@@ -125,11 +156,26 @@ public class Obra {
         return new ObraDAO().buscarPorAutoria(autoria.trim());
     }
 
-    public void editarObra(String titulo, String autoria, int ano, String tecnica, String descricao,
-            CategoriaObra categoria, String legenda) {
-
-        Obra obraAtualizada = recuperarDoBanco(this.id, titulo, autoria, ano, tecnica, descricao, categoria, legenda,
-                this.nucleoTematico);
+    public void editarObra(
+        String titulo,
+        String autoria,
+        int ano,
+        String tecnica,
+        String descricao,
+        CategoriaObra categoria,
+        String legenda
+    ) {
+        Obra obraAtualizada = recuperarDoBanco(
+            this.id,
+            titulo,
+            autoria,
+            ano,
+            tecnica,
+            descricao,
+            categoria,
+            legenda,
+            this.nucleoTematico
+        );
 
         new ObraDAO().atualizar(obraAtualizada);
 
@@ -154,14 +200,14 @@ public class Obra {
     }
 
     public boolean vincularNucleo(NucleoTematico nucleo) {
-
         if (nucleo == null || nucleo.getId() <= 0) {
             return false;
         }
 
         boolean vinculado = new ObraDAO().vincularNucleo(
-                this.id,
-                nucleo.getId());
+            this.id,
+            nucleo.getId()
+        );
 
         if (vinculado) {
             this.nucleoTematico = nucleo;
@@ -171,14 +217,14 @@ public class Obra {
     }
 
     public boolean desvincularNucleo() {
-
         if (this.nucleoTematico == null) {
             return false;
         }
 
         boolean desvinculado = new ObraDAO().desvincularNucleo(
-                this.id,
-                this.nucleoTematico.getId());
+            this.id,
+            this.nucleoTematico.getId()
+        );
 
         if (desvinculado) {
             this.nucleoTematico = null;
@@ -195,5 +241,4 @@ public class Obra {
             System.out.println(e.getMessage());
         }
     }
-
 }

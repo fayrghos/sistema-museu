@@ -1,6 +1,5 @@
 package catalogo.exposicao;
 
-
 public enum StatusExposicao {
     PLANEJAMENTO(1),
     EM_DESENVOLVIMENTO(2),

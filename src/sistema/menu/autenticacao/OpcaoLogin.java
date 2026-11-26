@@ -4,8 +4,8 @@ import autenticacao.Usuario;
 import autenticacao.UsuarioDAO;
 import sistema.Sistema;
 import sistema.menu.Opcao;
+import utilidades.EmailValidacao;
 import utilidades.Entrada;
-import utilidades.validacao.EmailValidacao;
 
 public final class OpcaoLogin extends Opcao {
 

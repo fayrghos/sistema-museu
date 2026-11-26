@@ -1,7 +1,6 @@
 package autenticacao;
 
 import banco.BancoGenericoDAO;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,11 +15,21 @@ public class UsuarioDAO extends BancoGenericoDAO<Usuario> {
 
     @Override
     public List<String> colunasInsercao() {
-        return List.of("nome", "email", "senha", "ativo", "administrador", "curador");
+        return List.of(
+            "nome",
+            "email",
+            "senha",
+            "ativo",
+            "administrador",
+            "curador"
+        );
     }
 
     @Override
-    public void preencherStatement(PreparedStatement ps, Usuario u) throws SQLException {
+    public void preencherStatement(
+        PreparedStatement ps,
+        Usuario u
+    ) throws SQLException {
         ps.setString(1, u.getNome());
         ps.setString(2, u.getEmail());
         ps.setString(3, u.getSenha());
@@ -57,16 +66,24 @@ public class UsuarioDAO extends BancoGenericoDAO<Usuario> {
     }
 
     public Usuario buscarPorEmail(String email) {
-        List<Usuario> r = consultar("SELECT * FROM USUARIO WHERE LOWER(email) = LOWER(?)", email);
+        List<Usuario> r = consultar(
+            "SELECT * FROM USUARIO WHERE LOWER(email) = LOWER(?)",
+            email
+        );
         return r.isEmpty() ? null : r.get(0);
     }
 
     public List<Usuario> buscarPorNome(String nome) {
-        return consultar("SELECT * FROM USUARIO WHERE nome ILIKE ? ORDER BY nome", "%" + nome + "%");
+        return consultar(
+            "SELECT * FROM USUARIO WHERE nome ILIKE ? ORDER BY nome",
+            "%" + nome + "%"
+        );
     }
 
     public List<Usuario> buscarAdministradoresAtivos() {
-        return consultar("SELECT * FROM USUARIO WHERE administrador = TRUE AND ativo = TRUE");
+        return consultar(
+            "SELECT * FROM USUARIO WHERE administrador = TRUE AND ativo = TRUE"
+        );
     }
 
     public int contarAdministradoresAtivos() {

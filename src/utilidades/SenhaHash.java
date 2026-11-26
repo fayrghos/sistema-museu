@@ -1,11 +1,10 @@
-package utilidades.hash;
+package utilidades;
 
 import org.mindrot.jbcrypt.BCrypt;
 
 public class SenhaHash {
 
     public static String gerarHash(String senha) {
-
         if (senha == null || senha.isBlank()) {
             return null;
         }
@@ -17,9 +16,12 @@ public class SenhaHash {
         String senhaOriginal,
         String senhaHashBanco
     ) {
-
-        if (senhaOriginal == null || senhaHashBanco == null
-                || senhaOriginal.isBlank() || senhaHashBanco.isBlank()) {
+        if (
+            senhaOriginal == null ||
+            senhaHashBanco == null ||
+            senhaOriginal.isBlank() ||
+            senhaHashBanco.isBlank()
+        ) {
             return false;
         }
 

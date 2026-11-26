@@ -1,10 +1,11 @@
 package catalogo.exposicao;
 
+import autenticacao.Usuario;
 import java.util.Date;
 import java.util.List;
-import autenticacao.Usuario;
 
 public class Exposicao {
+
     private int id;
     private String titulo;
     private String tema;
@@ -16,12 +17,18 @@ public class Exposicao {
     private String textoApresentacao;
     private StatusExposicao status;
 
-
-    public Exposicao(int id, String titulo, String tema,
-        String conceito, String objetivos, String descricao,
-        Date periodoInicioPrevisto, Date periodoFimPrevisto,
-        String textoApresentacao, StatusExposicao status) {
-
+    public Exposicao(
+        int id,
+        String titulo,
+        String tema,
+        String conceito,
+        String objetivos,
+        String descricao,
+        Date periodoInicioPrevisto,
+        Date periodoFimPrevisto,
+        String textoApresentacao,
+        StatusExposicao status
+    ) {
         this.id = id;
         this.titulo = titulo;
         this.tema = tema;
@@ -34,8 +41,17 @@ public class Exposicao {
         this.status = status;
     }
 
-
-    private Exposicao(Usuario usuario, String titulo, String tema, String conceito, String objetivos, String descricao, Date periodoInicioPrevisto, Date periodoFimPrevisto, String textoApresentacao){
+    private Exposicao(
+        Usuario usuario,
+        String titulo,
+        String tema,
+        String conceito,
+        String objetivos,
+        String descricao,
+        Date periodoInicioPrevisto,
+        Date periodoFimPrevisto,
+        String textoApresentacao
+    ) {
         this.titulo = titulo;
         this.tema = tema;
         this.conceito = conceito;
@@ -47,13 +63,32 @@ public class Exposicao {
         status = StatusExposicao.PLANEJAMENTO;
     }
 
-    public static Exposicao criarExposicao(Usuario usuario, String titulo, String tema, String conceito, String objetivos, String descricao, Date periodoInicioPrevisto, Date periodoFimPrevisto, String textoApresentacao){
-        Exposicao exposicao = new Exposicao(usuario, titulo, tema, conceito, objetivos, descricao, periodoInicioPrevisto, periodoFimPrevisto, textoApresentacao);
+    public static Exposicao criarExposicao(
+        Usuario usuario,
+        String titulo,
+        String tema,
+        String conceito,
+        String objetivos,
+        String descricao,
+        Date periodoInicioPrevisto,
+        Date periodoFimPrevisto,
+        String textoApresentacao
+    ) {
+        Exposicao exposicao = new Exposicao(
+            usuario,
+            titulo,
+            tema,
+            conceito,
+            objetivos,
+            descricao,
+            periodoInicioPrevisto,
+            periodoFimPrevisto,
+            textoApresentacao
+        );
 
         ExposicaoDAO dao = new ExposicaoDAO();
 
         dao.inserir(exposicao, usuario);
-        // criar exposição: passa -> id exposicao, id usuario, id status_exposicao, titulo, tema, conceito, objetivos, descricao, periodo_inicio_previsto, periodo_fim_previsto, texto_apresentacao
 
         return exposicao;
     }
@@ -71,7 +106,16 @@ public class Exposicao {
         System.out.printf("Status: %s%n", status);
     }
 
-    public void editarExposicao(String titulo, String tema, String conceito, String objetivos, String descricao, Date periodoInicioPrevisto, Date periodoFimPrevisto, String textoApresentacao){
+    public void editarExposicao(
+        String titulo,
+        String tema,
+        String conceito,
+        String objetivos,
+        String descricao,
+        Date periodoInicioPrevisto,
+        Date periodoFimPrevisto,
+        String textoApresentacao
+    ) {
         this.titulo = titulo;
         this.tema = tema;
         this.conceito = conceito;
@@ -85,44 +129,44 @@ public class Exposicao {
         dao.atualizar(id, this);
     }
 
-    public void excluirExposicao(){
+    public void excluirExposicao() {
         ExposicaoDAO dao = new ExposicaoDAO();
         dao.excluirExposicao(id);
         System.out.println("Exposição excluída com sucesso.");
     }
 
-    public static List<Exposicao> listarExposicoes(){
+    public static List<Exposicao> listarExposicoes() {
         ExposicaoDAO dao = new ExposicaoDAO();
         List<Exposicao> exposicoes;
         exposicoes = dao.listarTodos();
         return exposicoes;
     }
 
-    public static List<Exposicao> buscarPorTitulo(String titulo){
+    public static List<Exposicao> buscarPorTitulo(String titulo) {
         ExposicaoDAO dao = new ExposicaoDAO();
         return dao.buscarPorTitulo(titulo);
     }
 
-    public static List<Exposicao> buscarPorTema(String tema){
+    public static List<Exposicao> buscarPorTema(String tema) {
         ExposicaoDAO dao = new ExposicaoDAO();
         return dao.buscarPorTema(tema);
     }
 
     public void iniciarDesenvolvimento() {
-    status = StatusExposicao.EM_DESENVOLVIMENTO;
+        status = StatusExposicao.EM_DESENVOLVIMENTO;
 
-    ExposicaoDAO dao = new ExposicaoDAO();
-    dao.atualizar(id, this);
+        ExposicaoDAO dao = new ExposicaoDAO();
+        dao.atualizar(id, this);
     }
 
-    public void concluirExposicao(){
+    public void concluirExposicao() {
         status = StatusExposicao.CONCLUIDA;
 
         ExposicaoDAO dao = new ExposicaoDAO();
         dao.atualizar(id, this);
     }
 
-    public void reabrirExposicao(){
+    public void reabrirExposicao() {
         status = StatusExposicao.EM_DESENVOLVIMENTO;
 
         ExposicaoDAO dao = new ExposicaoDAO();
@@ -169,7 +213,7 @@ public class Exposicao {
         return status;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 }
