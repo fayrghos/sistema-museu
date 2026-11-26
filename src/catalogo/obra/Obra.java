@@ -190,7 +190,7 @@ public class Obra {
     public void excluirObra() {
         try {
             new ObraDAO().excluir(this.id);
-
+            System.out.println("Obra excluída com sucesso.");
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }

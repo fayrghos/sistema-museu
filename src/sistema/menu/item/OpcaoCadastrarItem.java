@@ -20,7 +20,7 @@ public final class OpcaoCadastrarItem extends Opcao {
 
         switch (tipoItem) {
             case OBRA -> {
-                Obra.criarObra(
+                Obra obra = Obra.criarObra(
                     Entrada.lerPalavra("Insira o nome", sistema.leitor()),
                     Entrada.lerPalavra("Insira a autoria", sistema.leitor()),
                     Entrada.lerInteiro("Insira o ano", sistema.leitor()),
@@ -29,10 +29,13 @@ public final class OpcaoCadastrarItem extends Opcao {
                     Entrada.lerCategoria(sistema.leitor()),
                     Entrada.lerPalavra("Insira a legenda", sistema.leitor())
                 );
-                System.out.println("Obra cadastrada com sucesso!");
+                System.out.printf(
+                    "Obra cadastrada com sucesso. ID: %d\n",
+                    obra.getId()
+                );
             }
             case EXPOSICAO -> {
-                Exposicao.criarExposicao(
+                Exposicao exposicao = Exposicao.criarExposicao(
                     sistema.usuario(),
                     Entrada.lerPalavra("Insira o título", sistema.leitor()),
                     Entrada.lerPalavra("Insira o tema", sistema.leitor()),
@@ -52,7 +55,10 @@ public final class OpcaoCadastrarItem extends Opcao {
                         sistema.leitor()
                     )
                 );
-                System.out.println("Exposição cadastrada com sucesso!");
+                System.out.printf(
+                    "Exposição cadastrada com sucesso. ID: %d\n",
+                    exposicao.getId()
+                );
             }
             case NUCLEO -> {
                 int idExposicao = Entrada.lerInteiro(
@@ -71,7 +77,7 @@ public final class OpcaoCadastrarItem extends Opcao {
                     return;
                 }
 
-                NucleoTematico.criarNucleo(
+                NucleoTematico nucleo = NucleoTematico.criarNucleo(
                     exposicao,
                     Entrada.lerPalavra("Insira o título", sistema.leitor()),
                     Entrada.lerPalavra("Insira a descrição", sistema.leitor()),
@@ -81,7 +87,10 @@ public final class OpcaoCadastrarItem extends Opcao {
                     ),
                     Entrada.lerInteiro("Insira a ordem", sistema.leitor())
                 );
-                System.out.println("Núcleo cadastrado com sucesso!");
+                System.out.printf(
+                    "Núcleo cadastrado com sucesso. ID: %d\n",
+                    nucleo.getId()
+                );
             }
         }
 

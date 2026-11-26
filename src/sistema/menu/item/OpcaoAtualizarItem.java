@@ -44,6 +44,10 @@ public final class OpcaoAtualizarItem extends Opcao {
                     Entrada.lerCategoria(sistema.leitor()),
                     Entrada.lerPalavra("Insira a legenda", sistema.leitor())
                 );
+                System.out.printf(
+                    "Obra de ID %d atualizada com sucesso.\n",
+                    obra.getId()
+                );
             }
             case EXPOSICAO -> {
                 ExposicaoDAO buscadorExposicao = new ExposicaoDAO();
@@ -81,6 +85,10 @@ public final class OpcaoAtualizarItem extends Opcao {
                         sistema.leitor()
                     )
                 );
+                System.out.printf(
+                    "Exposição de ID %d atualizada com sucesso.\n",
+                    exposicao.getId()
+                );
             }
             case NUCLEO -> {
                 NucleoTematicoDAO buscadorNucleo = new NucleoTematicoDAO();
@@ -107,6 +115,10 @@ public final class OpcaoAtualizarItem extends Opcao {
                         sistema.leitor()
                     ),
                     Entrada.lerInteiro("Insira a ordem", sistema.leitor())
+                );
+                System.out.printf(
+                    "Núcleo de ID %d atualizado com sucesso.\n",
+                    nucleo.getId()
                 );
             }
         }

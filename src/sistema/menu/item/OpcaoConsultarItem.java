@@ -34,6 +34,7 @@ public final class OpcaoConsultarItem extends Opcao {
                     return;
                 }
 
+                System.out.println("Obra encontrada:");
                 obra.verObra();
             }
             case EXPOSICAO -> {
@@ -52,6 +53,7 @@ public final class OpcaoConsultarItem extends Opcao {
                     return;
                 }
 
+                System.out.println("Exposição encontrada:");
                 exposicao.verExposicao();
             }
             case NUCLEO -> {
@@ -70,6 +72,7 @@ public final class OpcaoConsultarItem extends Opcao {
                     return;
                 }
 
+                System.out.println("Núcleo encontrado:");
                 nucleo.verNucleo();
             }
         }

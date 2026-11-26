@@ -34,6 +34,10 @@ public final class OpcaoExcluirItem extends Opcao {
                     return;
                 }
 
+                System.out.printf(
+                    "Excluindo obra de ID %d.\n",
+                    obra.getId()
+                );
                 obra.excluirObra();
             }
             case EXPOSICAO -> {
@@ -60,6 +64,10 @@ public final class OpcaoExcluirItem extends Opcao {
                     return;
                 }
 
+                System.out.printf(
+                    "Excluindo exposição de ID %d.\n",
+                    exposicao.getId()
+                );
                 exposicao.excluirExposicao();
             }
             case NUCLEO -> {
@@ -78,6 +86,10 @@ public final class OpcaoExcluirItem extends Opcao {
                     return;
                 }
 
+                System.out.printf(
+                    "Excluindo núcleo de ID %d.\n",
+                    nucleo.getId()
+                );
                 nucleo.excluirNucleo();
             }
         }

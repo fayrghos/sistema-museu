@@ -88,6 +88,7 @@ public class Exposicao {
     public void excluirExposicao(){
         ExposicaoDAO dao = new ExposicaoDAO();
         dao.excluirExposicao(id);
+        System.out.println("Exposição excluída com sucesso.");
     }
 
     public static List<Exposicao> listarExposicoes(){

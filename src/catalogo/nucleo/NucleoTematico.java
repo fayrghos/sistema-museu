@@ -136,7 +136,7 @@ public class NucleoTematico {
 
         try {
             banco.excluir(this.id);
-
+            System.out.println("Núcleo excluído com sucesso.");
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }
