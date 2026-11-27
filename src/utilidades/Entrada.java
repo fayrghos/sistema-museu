@@ -93,25 +93,6 @@ public class Entrada {
         }
     }
 
-    public static String lerLinha(String rotulo, Scanner leitor) {
-        for (;;) {
-            try {
-                System.out.printf("%s: ", rotulo);
-                String entrada = leitor.nextLine().trim();
-
-                if (entrada.isEmpty()) {
-                    throw new RuntimeException(
-                        "A entrada não pode estar em branco"
-                    );
-                }
-
-                return entrada;
-            } catch (RuntimeException err) {
-                System.err.println(err.getMessage());
-            }
-        }
-    }
-
     public static int lerInteiro(String rotulo, Scanner leitor) {
         for (;;) {
             try {
@@ -156,7 +137,9 @@ public class Entrada {
                 System.out.println();
                 escolha = Integer.parseInt(entrada);
             } catch (NumberFormatException err) {
-                System.out.println("Apenas números inteiros são permitidos.");
+                System.out.println(
+                    "Apenas números inteiros são permitidos."
+                );
                 continue;
             }
 

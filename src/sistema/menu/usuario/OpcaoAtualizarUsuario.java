@@ -30,7 +30,7 @@ public final class OpcaoAtualizarUsuario extends Opcao {
 
         try {
             usuario.editarUsuario(
-                Entrada.lerLinha("Insira o novo nome", sistema.leitor()),
+                Entrada.lerPalavra("Insira o novo nome", sistema.leitor()),
                 Entrada.lerPalavra("Insira o novo email", sistema.leitor()),
                 Entrada.lerPalavra("Insira a nova senha", sistema.leitor())
             );

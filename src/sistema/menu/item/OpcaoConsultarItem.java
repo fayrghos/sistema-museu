@@ -13,7 +13,7 @@ import utilidades.Entrada;
 public final class OpcaoConsultarItem extends Opcao {
 
     public OpcaoConsultarItem(Sistema sistema) {
-        super(sistema, "Consultar Item");
+        super(sistema, "Consultar Item", false, true);
     }
 
     @Override

@@ -15,7 +15,7 @@ public final class OpcaoCadastrarUsuario extends Opcao {
     public void interagir() {
         try {
             Usuario.criarUsuario(
-                Entrada.lerLinha("Insira o nome", sistema.leitor()),
+                Entrada.lerPalavra("Insira o nome", sistema.leitor()),
                 Entrada.lerPalavra("Insira o email", sistema.leitor()),
                 Entrada.lerPalavra("Insira a senha", sistema.leitor()),
                 Entrada.lerBooleano("Deve ser administrador", sistema.leitor()),
